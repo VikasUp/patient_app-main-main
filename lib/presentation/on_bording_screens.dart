@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:patient_app/dashboard_screen/screens/dashboard.dart';
+import 'package:patient_app/presentation/dashboard_screen/screens/dashboard.dart';
 import 'package:patient_app/data/models/on_boarding_model.dart';
 
 final List<OnBoard> demoData = [
@@ -55,11 +55,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         curve: Curves.easeInOut,
       );
     } else {
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) => DashBoardScreen(),
         ),
+        (route) => false,
       );
     }
   }
@@ -77,12 +78,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 alignment: Alignment.topRight,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DashBoardScreen(),
-                      ),
-                    );
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DashBoardScreen(),
+                        ),
+                        (route) => false);
                   },
                   child: const Text(
                     'Skip',
@@ -135,7 +136,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         inactiveColor: const Color(0xFF006064),
                       ),
                       SizedBox(width: 16),
-                      InkWell(
+                      GestureDetector(
                         onTap: _nextPage,
                         child: Container(
                           height: 50,

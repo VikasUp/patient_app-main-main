@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:patient_app/data/sky_strings.dart/colors_manager.dart';
 import 'package:patient_app/data/sky_strings.dart/screen_title.dart';
 import 'package:patient_app/data/sky_strings.dart/sky_img_source.dart';
-import 'package:patient_app/presentation/create_new_appointment/new_appointment_screen.dart';
+import 'package:patient_app/presentation/abdominal_discomfort/new_appointment_screen.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:patient_app/data/sky_strings.dart/hint_strings.dart';
-import 'package:patient_app/presentation/date_list.dart/date_list.dart';
+import 'package:patient_app/presentation/abdominal_discomfort/date_list.dart';
 
 class AbdominalDiscomfortPage extends StatefulWidget {
   const AbdominalDiscomfortPage({Key? key}) : super(key: key);
@@ -56,10 +57,6 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        image: DecorationImage(
-          alignment: Alignment(1.0, -1.0),
-          image: AssetImage(ImageSaource.kString1),
-        ),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -88,60 +85,57 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
       toolbarHeight: 110,
       automaticallyImplyLeading: false,
       title: _buildAppBarTitle(size),
+      leading: GestureDetector(
+        onTap: () {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NewAppointmentPage(),
+            ),
+            (route) => false,
+          );
+        },
+        child: Container(
+            child: Icon(
+          Icons.arrow_back_ios,
+          color: Colors.grey,
+          size: 20,
+        )),
+      ),
+      actions: [
+        IconButton(
+            onPressed: () {},
+            icon: Image.asset(
+              ImageSaource.kloginLogo,
+              height: 50,
+              width: 50,
+            ))
+      ],
+      titleSpacing: 10,
+      flexibleSpace: Container(
+        height: 120,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          image: DecorationImage(
+            image: AssetImage(
+              ImageSaource.kString1,
+            ),
+            alignment: Alignment.centerRight,
+          ),
+        ),
+      ),
     );
   }
 
   Widget _buildAppBarTitle(Size size) {
-    return Row(
+    return Column(
       children: [
-        IconButton(
-          icon: Image.asset(
-            ImageSaource.kString5,
-            height: 40,
-            width: 40,
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NewAppointmentPage(),
-              ),
-            );
-          },
-        ),
-        SizedBox(width: 15),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                ScreenTitle.kTitle,
-                style: GoogleFonts.cairo(
-                  color: Color(0xFF006064),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ],
-          ),
-        ),
-        _buildProfileImage(),
-      ],
-    );
-  }
-
-  Widget _buildProfileImage() {
-    return Stack(
-      children: [
-        Container(
-          height: 60,
-          width: 100,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(ImageSaource.kloginLogo),
-            ),
-            borderRadius: BorderRadius.circular(10),
+        Text(
+          ScreenTitle.kTitle,
+          style: GoogleFonts.cairo(
+            color: Color(0xFF006064),
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
         ),
       ],
@@ -154,6 +148,42 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
           ? Shimmer.fromColors(
               baseColor: Color(0xFF006064),
               highlightColor: Colors.white,
+              child: Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  side: BorderSide(color: Colors.black, width: 0.8),
+                ),
+                child: Container(
+                  height: 55,
+                  width: size.width / 1.1,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 2,
+                  ),
+                  child: Center(
+                    child: TextFormField(
+                      onChanged: (value) => _search(),
+                      decoration: InputDecoration(
+                        hintText: HintString.ksearch,
+                        border: InputBorder.none,
+                        prefixIcon: Icon(
+                          Icons.search,
+                          size: 35,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          : Card(
+              color: Colors.white,
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+                side: BorderSide(color: Colors.black, width: 0.8),
+              ),
               child: Container(
                 height: 55,
                 width: size.width / 1.1,
@@ -161,50 +191,19 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
                   horizontal: 10,
                   vertical: 2,
                 ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                  border: Border.all(color: Colors.black, width: 0.8),
-                ),
                 child: Center(
                   child: TextFormField(
                     onChanged: (value) => _search(),
                     decoration: InputDecoration(
                       hintText: HintString.ksearch,
+                      hintStyle: GoogleFonts.cairo(
+                        fontSize: 16,
+                      ),
                       border: InputBorder.none,
                       prefixIcon: Icon(
                         Icons.search,
-                        size: 35,
+                        size: 28,
                       ),
-                    ),
-                  ),
-                ),
-              ),
-            )
-          : Container(
-              height: 55,
-              width: size.width / 1.1,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 2,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(color: Colors.black, width: 0.8),
-              ),
-              child: Center(
-                child: TextFormField(
-                  onChanged: (value) => _search(),
-                  decoration: InputDecoration(
-                    hintText: HintString.ksearch,
-                    hintStyle: GoogleFonts.cairo(
-                      fontSize: 16,
-                    ),
-                    border: InputBorder.none,
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 28,
                     ),
                   ),
                 ),
@@ -221,7 +220,7 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
         children: [
           showShimmer
               ? Shimmer.fromColors(
-                  baseColor: Color(0xFF006064),
+                  baseColor: ColorManager.primarydarkGreenColor,
                   highlightColor: Colors.white,
                   child: Text(
                     HintString.kDoctorList,
@@ -242,7 +241,7 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
             children: [
               showShimmer
                   ? Shimmer.fromColors(
-                      baseColor: Color(0xFF006064),
+                      baseColor: ColorManager.primarydarkGreenColor,
                       highlightColor: Colors.white,
                       child: Container(),
                     )
@@ -252,14 +251,14 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
                         style: GoogleFonts.cairo(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF006064),
+                          color: ColorManager.primarydarkGreenColor,
                           decoration: TextDecoration.none,
                         ),
                       ),
                       decoration: BoxDecoration(
                         border: Border(
                           bottom: BorderSide(
-                            color: Color(0xFF006064),
+                            color: ColorManager.primarydarkGreenColor,
                             width: 2.0,
                           ),
                         ),
@@ -280,7 +279,7 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
         itemBuilder: (context, index) {
           return showShimmer
               ? Shimmer.fromColors(
-                  baseColor: Color(0xFF006064),
+                  baseColor: ColorManager.primarydarkGreenColor,
                   highlightColor: Colors.white,
                   child: RectangularBoxWidget(
                     doctorName: filteredLabels[index],
@@ -415,11 +414,11 @@ class RectangularBoxWidget extends StatelessWidget {
                       width: size.width * 0.5,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
                               builder: (context) => DateList(),
-                            ),
+                            ),(route)=> false
                           );
                         },
                         style: ElevatedButton.styleFrom(

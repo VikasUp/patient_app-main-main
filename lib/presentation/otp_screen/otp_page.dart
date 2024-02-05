@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:patient_app/presentation/abdominal_discomfort/date_list.dart';
 import 'package:patient_app/presentation/login_screen/login.dart';
 import 'package:patient_app/presentation/login_screen/sign_up_page.dart';
 import 'package:patient_app/presentation/otp_screen/otp_verify.dart';
@@ -25,18 +26,21 @@ class _OtpPageState extends State<OtpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 50,
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/images/leading_action_button.png',
-              height: 40,
-              width: 40,
-            ),
-          ],
-        ),
-      ),
+          toolbarHeight: 50,
+          automaticallyImplyLeading: false,
+          title: Text(''),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => DateList()),
+                    (route) => false);
+              },
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.grey,
+                size: 25,
+              ))),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -168,9 +172,10 @@ class _OtpPageState extends State<OtpPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => VerifyOtpPage()),
+                      (route) => false,
                     );
                   },
                   child: Text(
@@ -202,9 +207,10 @@ class _OtpPageState extends State<OtpPage> {
                 alignment: Alignment.center,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => LoginScreen()),
+                      (route) => false,
                     );
                   },
                   child: Text(
@@ -224,9 +230,10 @@ class _OtpPageState extends State<OtpPage> {
                   alignment: Alignment.bottomCenter,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => SignUpScreen()),
+                        (route) => false,
                       );
                     },
                     child: RichText(

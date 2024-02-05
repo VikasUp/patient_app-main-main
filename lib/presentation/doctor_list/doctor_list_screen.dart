@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:patient_app/data/sky_strings.dart/hint_strings.dart';
-import 'package:patient_app/presentation/date_list.dart/date_list.dart';
 import 'package:patient_app/presentation/request_screen/apointment.dart';
 
 class DoctorListPage extends StatefulWidget {
@@ -261,10 +260,10 @@ class RectangularBoxWidget extends StatelessWidget {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AppointmentPage()),
+                            builder: (context) => AppointmentPage()),(route)=> false
                       );
                     },
                     style: ElevatedButton.styleFrom(

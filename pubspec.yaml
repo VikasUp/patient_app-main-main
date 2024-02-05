@@ -49,6 +49,8 @@ dependencies:
   pinput: ^3.0.1
   animated_text_kit: ^4.2.2
   google_maps_flutter: ^2.5.3
+  loading_animation_widget: ^1.2.0+4
+  flutter_easyloading: ^3.0.5
 
 dev_dependencies:
   flutter_test:
@@ -144,6 +146,8 @@ flutter:
     - assets/images/refil.png
     - assets/images/notification.png
     - assets/images/noti_background.png
+    - assets/images/alreadybook.png
+    - assets/images/home.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

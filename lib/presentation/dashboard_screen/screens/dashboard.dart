@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:patient_app/dashboard_screen/widgets/bottom_widgets.dart';
+import 'package:patient_app/presentation/dashboard_screen/widgets/bottom_widgets.dart';
 import 'package:patient_app/data/sky_strings.dart/colors_manager.dart';
 import 'package:patient_app/data/sky_strings.dart/hint_strings.dart';
 import 'package:patient_app/data/sky_strings.dart/screen_title.dart';
 import 'package:patient_app/data/sky_strings.dart/sky_img_source.dart';
-import 'package:patient_app/presentation/apponintment_screen/appointment.dart';
+import 'package:patient_app/presentation/abdominal_discomfort/appointment.dart';
 import 'package:patient_app/presentation/home_checkup/home_checkup.dart';
 import 'package:patient_app/presentation/tele_medical/tele_medical.dart';
 
@@ -73,117 +73,102 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        image: DecorationImage(
-          alignment: Alignment(1.0, -1.0),
-          image: AssetImage(ImageSaource.kString1),
-        ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: _buildAppBar(size),
-        body: SingleChildScrollView(
-          child: _buildBody(size),
-        ),
-        bottomNavigationBar: MyBottomNavigationBar(
-          selectedIndex: _selectedIndex,
-          onTabTapped: _onItemTapped,
-        ),
-      ),
-    );
-  }
-
-  AppBar _buildAppBar(Size size) {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      toolbarHeight: 110,
-      elevation: 0.0,
-      automaticallyImplyLeading: false,
-      title: _buildAppBarTitle(size),
-    );
-  }
-
-  Widget _buildAppBarTitle(Size size) {
-    return Row(
-      children: [
-        Image.asset(
-          ImageSaource.kString2,
-          height: 30,
-          width: 30,
-        ),
-        SizedBox(width: 20),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5.0),
-                child: Text(
-                  ScreenTitle.kGoodMorning,
-                  style: GoogleFonts.cairo(
-                    fontSize: 15,
+      color: ColorManager.primarydarkGreenColor,
+      child: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Scaffold(
+                appBar: _buildAppBar(size),
+                backgroundColor: Colors.transparent,
+                body: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildSearchBar(size),
+                              _buildServicesHeader(),
+                              _buildServicesGrid(),
+                              _buildUpcomingSchedule(size),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Text(
-                ScreenTitle.kname,
-                style: GoogleFonts.cairo(
-                  color: Color(0xFF006064),
-                  fontWeight: FontWeight.bold,
+                bottomNavigationBar: MyBottomNavigationBar(
+                  selectedIndex: _selectedIndex,
+                  onTabTapped: _onItemTapped,
                 ),
               ),
-            ],
-          ),
-        ),
-        _buildProfileImage(),
-      ],
-    );
-  }
-
-  Widget _buildProfileImage() {
-    return Stack(
-      children: [
-        Container(
-          height: 150,
-          width: 180,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        Positioned(
-          top: 40,
-          left: 115,
-          child: IconButton(
-            icon: Image.asset(
-              ImageSaource.kString3,
-              height: 50,
-              width: 50,
             ),
-            onPressed: () {},
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
-  Widget _buildBody(Size size) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 5),
-            _buildSearchBar(size),
-            const SizedBox(height: 16),
-            _buildServicesHeader(),
-            const SizedBox(height: 16),
-            _buildServicesGrid(),
-            const SizedBox(height: 25),
-            _buildUpcomingSchedule(size),
-          ],
+  _buildAppBar(Size size) {
+    return AppBar(
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            ScreenTitle.kGoodMorning,
+            style: GoogleFonts.cairo(
+              fontSize: 18,
+            ),
+          ),
+          Text(
+            ScreenTitle.kname,
+            style: GoogleFonts.cairo(
+                color: ColorManager.primarydarkGreenColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 18),
+          ),
+        ],
+      ),
+      leading: IconButton(
+        onPressed: () {},
+        icon: Image.asset(
+          ImageSaource.kString2,
+          width: 30,
+          height: 30,
+        ),
+      ),
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: Image.asset(
+            ImageSaource.kString3,
+            width: 50,
+            height: 50,
+          ),
+        )
+      ],
+      toolbarHeight: 120,
+      titleSpacing: 10,
+      flexibleSpace: Container(
+        height: 120,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          image: DecorationImage(
+            image: AssetImage(
+              ImageSaource.kString1,
+            ),
+            alignment: Alignment.centerRight,
+          ),
         ),
       ),
     );
@@ -192,12 +177,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   Widget _buildSearchBar(Size size) {
     return Center(
       child: Card(
+        color: ColorManager.primarywhiteColor,
         elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
           side: BorderSide(color: Colors.black, width: 0.5),
         ),
-        color: ColorManager.primarywhiteColor,
         child: Container(
           height: 50,
           width: size.width / 0.8,
@@ -259,14 +244,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         style: GoogleFonts.cairo(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Color(0xFF006064),
+          color: ColorManager.primarydarkGreenColor,
           decoration: TextDecoration.none,
         ),
       ),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Color(0xFF006064),
+            color: ColorManager.primarydarkGreenColor,
             width: 2.0,
           ),
         ),
@@ -276,21 +261,25 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   Widget _buildServicesGrid() {
     return Container(
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 16.0,
-          mainAxisSpacing: 20.0,
-        ),
-        itemCount: filteredLabels.length,
-        itemBuilder: (context, index) {
-          if (index < imagePaths.length && index < labels.length) {
-            return _buildServiceItem(index);
-          } else {
-            return SizedBox.shrink();
-          }
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 16.0,
+              mainAxisSpacing: 20.0,
+            ),
+            itemCount: filteredLabels.length,
+            itemBuilder: (context, index) {
+              if (index < imagePaths.length && index < labels.length) {
+                return _buildServiceItem(index);
+              } else {
+                return SizedBox.shrink();
+              }
+            },
+          );
         },
       ),
     );
@@ -301,28 +290,34 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       onTap: () {
         switch (index) {
           case 0:
-            Navigator.push(
+            Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
                 builder: (context) => AppointementPage(),
               ),
+              (route) => false,
             );
+
             break;
           case 1:
-            Navigator.push(
+            Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
                 builder: (context) => TeleMedicalPage(),
               ),
+              (route) => false,
             );
+
             break;
           case 2:
-            Navigator.push(
+            Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
                 builder: (context) => HomeCheckUpPage(),
               ),
+              (route) => false,
             );
+
             break;
         }
       },
@@ -366,9 +361,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       width: double.infinity,
       height: size.height * 0.2,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: ColorManager.primarywhiteColor,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Color(0xFF006064), width: 0.6),
+        border:
+            Border.all(color: ColorManager.primarydarkGreenColor, width: 0.6),
       ),
       child: Column(
         children: [
@@ -417,7 +413,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         Text(
           HintString.kVisitSchedule,
           style: GoogleFonts.cairo(
-            fontSize: size.width * 0.04,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
             color: Colors.grey,
           ),
         ),
@@ -496,7 +493,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           style: GoogleFonts.cairo(
             fontSize: size.width * 0.05,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: ColorManager.primarywhiteColor,
           ),
         ),
         SizedBox(height: size.height * 0.01),
@@ -504,7 +501,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           ScreenTitle.kvisit,
           style: GoogleFonts.cairo(
             fontSize: size.width * 0.035,
-            color: Colors.white,
+            color: ColorManager.primarywhiteColor,
           ),
         ),
       ],
@@ -519,14 +516,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           ScreenTitle.kmonth,
           style: GoogleFonts.cairo(
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: ColorManager.primarywhiteColor,
             fontSize: size.width * 0.04,
           ),
         ),
         Text(
           ScreenTitle.ktime,
           style: GoogleFonts.cairo(
-            color: Colors.white,
+            color: ColorManager.primarywhiteColor,
             fontSize: size.width * 0.03,
           ),
         ),

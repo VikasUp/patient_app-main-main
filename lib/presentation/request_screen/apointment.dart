@@ -273,20 +273,19 @@ class _AppointmentPageState extends State<AppointmentPage> {
                   ),
                 ),
                 SizedBox(height: 16.0),
-              
                 Center(
                   child: Container(
-                    height: 60, 
-                    width: MediaQuery.of(context).size.width /
-                        1.5, 
+                    height: 60,
+                    width: MediaQuery.of(context).size.width / 1.5,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                               builder: (context) => VideoCallPage(
                                     callID: '',
                                   )),
+                          (route) => false,
                         );
                       },
                       style: ElevatedButton.styleFrom(

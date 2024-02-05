@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:patient_app/presentation/apponintment_screen/appointment.dart';
 import 'package:patient_app/presentation/login_screen/sign_up_page.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -160,9 +159,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 19, vertical: 10),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => SignUpScreen()),
+                        (route) => false,
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -226,10 +226,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     alignment: Alignment.bottomCenter,
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(
+                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                               builder: (context) => SignUpScreen()),
+                          (route) => false,
                         );
                       },
                       child: RichText(

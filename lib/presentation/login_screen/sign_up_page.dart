@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:patient_app/data/sky_strings.dart/colors_manager.dart';
+import 'package:patient_app/data/sky_strings.dart/screen_title.dart';
+import 'package:patient_app/data/sky_strings.dart/sky_img_source.dart';
+import 'package:patient_app/presentation/abdominal_discomfort/date_list.dart';
 import 'package:patient_app/presentation/login_screen/login.dart';
+import 'package:patient_app/presentation/otp_screen/otp_page.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -244,10 +249,243 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               horizontal: size.width * 0.1, vertical: 10),
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignUpScreen()),
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    content: Container(
+                                      height: 300,
+                                      width: 350,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            ImageSaource.kdialougeBox,
+                                            height: 200,
+                                          ),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 5,
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                ScreenTitle.kdialougueText,
+                                                style: GoogleFonts.roboto(),
+                                              ),
+                                            ),
+                                          ),
+                                          Center(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 15),
+                                              child: Text(
+                                                ScreenTitle.kSuccessfully,
+                                                style: GoogleFonts.roboto(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Center(
+                                            child: Text(
+                                                ScreenTitle.kAppointmentID,
+                                                style: TextStyle(
+                                                    color: ColorManager
+                                                        .primarydarkGreenColor,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: [
+                                      Center(
+                                        child: TextButton(
+                                          // onPressed: () {
+                                          //   showDialog(
+                                          //     context: context,
+                                          //     builder: (BuildContext context) {
+                                          //       return AlertDialog(
+                                          //         content: Container(
+                                          //           height: 300,
+                                          //           width: 350,
+                                          //           decoration: BoxDecoration(
+                                          //             borderRadius:
+                                          //                 BorderRadius.circular(
+                                          //                     10),
+                                          //           ),
+                                          //           child: Column(
+                                          //             mainAxisAlignment:
+                                          //                 MainAxisAlignment
+                                          //                     .center,
+                                          //             crossAxisAlignment:
+                                          //                 CrossAxisAlignment
+                                          //                     .center,
+                                          //             children: [
+                                          //               Image.asset(
+                                          //                 ImageSaource
+                                          //                     .kalreadybooked,
+                                          //                 height: 200,
+                                          //               ),
+                                          //               SizedBox(
+                                          //                 height: 20,
+                                          //               ),
+                                          //               Padding(
+                                          //                 padding:
+                                          //                     const EdgeInsets
+                                          //                         .symmetric(
+                                          //                   horizontal: 5,
+                                          //                 ),
+                                          //                 child: Center(
+                                          //                   child: Text(
+                                          //                     ScreenTitle
+                                          //                         .kdialougueText2,
+                                          //                     style: GoogleFonts
+                                          //                         .roboto(),
+                                          //                   ),
+                                          //                 ),
+                                          //               ),
+                                          //               Center(
+                                          //                 child: Padding(
+                                          //                   padding:
+                                          //                       const EdgeInsets
+                                          //                           .symmetric(
+                                          //                           horizontal:
+                                          //                               15),
+                                          //                   child: Text(
+                                          //                     ScreenTitle
+                                          //                         .kAlreadyBooked,
+                                          //                     style: GoogleFonts
+                                          //                         .roboto(
+                                          //                       fontSize: 18,
+                                          //                       fontWeight:
+                                          //                           FontWeight
+                                          //                               .bold,
+                                          //                     ),
+                                          //                   ),
+                                          //                 ),
+                                          //               ),
+                                          //               SizedBox(
+                                          //                 height: 10,
+                                          //               ),
+                                          //               Center(
+                                          //                 child: Text(
+                                          //                     ScreenTitle
+                                          //                         .kpleasechooseAnotherSlot,
+                                          //                     style: TextStyle(
+                                          //                         color: ColorManager
+                                          //                             .primarydarkGreenColor,
+                                          //                         fontWeight:
+                                          //                             FontWeight
+                                          //                                 .bold)),
+                                          //               ),
+                                          //             ],
+                                          //           ),
+                                          //         ),
+                                          //         actions: [
+                                          //           Center(
+                                          //             child: TextButton(
+                                          //               onPressed: () {
+                                          //                 Navigator
+                                          //                     .pushAndRemoveUntil(
+                                          //                   context,
+                                          //                   MaterialPageRoute(
+                                          //                     builder:
+                                          //                         (context) =>
+                                          //                             DateList(),
+                                          //                   ),
+                                          //                   ((route) => false),
+                                          //                 );
+                                          //               },
+                                          //               child: Container(
+                                          //                 decoration:
+                                          //                     BoxDecoration(
+                                          //                   borderRadius:
+                                          //                       BorderRadius
+                                          //                           .circular(
+                                          //                               23),
+                                          //                   border: Border.all(
+                                          //                     color: ColorManager
+                                          //                         .primarydarkGreenColor,
+                                          //                   ),
+                                          //                 ),
+                                          //                 padding: EdgeInsets
+                                          //                     .symmetric(
+                                          //                   horizontal: 40,
+                                          //                   vertical: 10,
+                                          //                 ),
+                                          //                 child: Text(
+                                          //                   ScreenTitle.kOk,
+                                          //                   style: GoogleFonts
+                                          //                       .cairo(
+                                          //                     fontSize: 18,
+                                          //                     color: ColorManager
+                                          //                         .primarydarkGreenColor,
+                                          //                     fontWeight:
+                                          //                         FontWeight
+                                          //                             .bold,
+                                          //                   ),
+                                          //                 ),
+                                          //               ),
+                                          //             ),
+                                          //           ),
+                                          //         ],
+                                          //       );
+                                          //     },
+                                          //   );
+                                          // },
+                                          onPressed: () {
+                                            Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DateList(),
+                                              ),
+                                              ((route) => false),
+                                            );
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(23),
+                                              border: Border.all(
+                                                color: ColorManager
+                                                    .primarydarkGreenColor,
+                                              ),
+                                            ),
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 40,
+                                              vertical: 10,
+                                            ),
+                                            child: Text(
+                                              ScreenTitle.kOk,
+                                              style: GoogleFonts.cairo(
+                                                fontSize: 18,
+                                                color: ColorManager
+                                                    .primarydarkGreenColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
                               );
                             },
                             style: ElevatedButton.styleFrom(
@@ -276,10 +514,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             alignment: Alignment.bottomCenter,
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.push(
+                                Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => LoginScreen()),
+                                  (route) => false,
                                 );
                               },
                               child: RichText(

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:patient_app/dashboard_screen/screens/dashboard.dart';
+import 'package:patient_app/presentation/dashboard_screen/screens/dashboard.dart';
+import 'package:patient_app/data/sky_strings.dart/colors_manager.dart';
 import 'package:patient_app/data/sky_strings.dart/hint_strings.dart';
 import 'package:patient_app/data/sky_strings.dart/screen_title.dart';
 import 'package:patient_app/data/sky_strings.dart/sky_img_source.dart';
-import 'package:patient_app/presentation/create_new_appointment/new_appointment_screen.dart';
+import 'package:patient_app/presentation/abdominal_discomfort/new_appointment_screen.dart';
 
 class AppointementPage extends StatefulWidget {
-  const AppointementPage({Key? key}) : super(key: key);
-
+const AppointementPage({Key? key}) : super(key: key);
   @override
   _AppointementPageState createState() => _AppointementPageState();
 }
@@ -18,7 +18,7 @@ class _AppointementPageState extends State<AppointementPage> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: ColorManager.primarywhiteColor,
         image: DecorationImage(
           alignment: Alignment(1.0, -1.0),
           image: AssetImage(ImageSaource.kString1),
@@ -41,76 +41,59 @@ class _AppointementPageState extends State<AppointementPage> {
       backgroundColor: Colors.transparent,
       toolbarHeight: 100,
       automaticallyImplyLeading: false,
-      title: Row(
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          IconButton(
-            icon: Image.asset(
-              ImageSaource.kString5,
-              height: 40,
-              width: 40,
+          Text(
+            HintString.kYourAppointment,
+            style: GoogleFonts.cairo(
+              color: ColorManager.primarydarkGreenColor,
+              fontWeight: FontWeight.bold,
             ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DashBoardScreen(),
-                ),
-              );
-            },
           ),
           SizedBox(width: 15),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  HintString.kYourAppointment,
-                  style: GoogleFonts.cairo(
-                    color: Color(0xFF006064),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          _buildFloatingActionButton(context),
         ],
       ),
-      bottom: _buildTabBar(),
-    );
-  }
-
-  Widget _buildFloatingActionButton(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 150,
-          width: 180,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        Positioned(
-          top: 40,
-          left: 115,
-          child: IconButton(
-            icon: Image.asset(
+      leading: GestureDetector(
+        onTap: () {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DashBoardScreen(),
+            ),
+            (route) => false,
+          );
+        },
+        child: Container(
+            padding: EdgeInsets.all(10),
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.grey,
+            )),
+      ),
+      actions: [
+        GestureDetector(
+          onTap: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewAppointmentPage(),
+              ),
+              (route) => false,
+            );
+          },
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Image.asset(
               ImageSaource.kfloatingactionbutton,
               height: 50,
               width: 50,
             ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NewAppointmentPage(),
-                ),
-              );
-            },
           ),
-        ),
+        )
       ],
+      bottom: _buildTabBar(),
     );
   }
 
@@ -173,15 +156,16 @@ class _AppointementPageState extends State<AppointementPage> {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
               builder: (context) => NewAppointmentPage(),
             ),
+            (route) => false,
           );
         },
         style: ElevatedButton.styleFrom(
-          primary: Color(0xFF006064),
+          primary: ColorManager.primarydarkGreenColor,
           onPrimary: Colors.white,
           minimumSize: Size(300, 58),
         ),

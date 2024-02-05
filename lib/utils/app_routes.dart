@@ -1,7 +1,8 @@
 class AppRoutes {
   static const String splash = '/';
-  // static const String dashBoard = 'DashBoardScreen';
-  // static const String onBoarding = '/onBoardingScreen';
+  static const String onBoarding = '/onBoardingScreen';
+  static const String dashBoard = 'DashBoardScreen';
+  
   // static const String login = 'login';
   // static const String otpScreen = 'loginWithOtpScreen';
   // static const String otpLogin = 'otpLoginScreen';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patient_app/presentation/abdominal_discomfort/date_list.dart';
 import 'package:patient_app/presentation/login_screen/login.dart';
 import 'package:pinput/pinput.dart';
 
@@ -36,7 +37,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
 
     final focusedPinTheme = defaultPinTheme.copyDecorationWith(
       border: Border.all(color: Color.fromRGBO(114, 178, 238, 1)),
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(7),
     );
 
     final submittedPinTheme = defaultPinTheme.copyWith(
@@ -49,15 +50,8 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
       appBar: AppBar(
         toolbarHeight: 50,
         automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/images/leading_action_button.png',
-              height: 40,
-              width: 40,
-            ),
-          ],
-        ),
+        title: Text(''),
+       
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -145,7 +139,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(right: 40.0),
+                          padding: const EdgeInsets.only(right: 27.0),
                           child: TextButton(
                             onPressed: () {},
                             child: Row(
@@ -157,7 +151,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(width: 8.0),
+                                SizedBox(width: 6.0),
                                 Image.asset(
                                   'assets/images/send.png',
                                   height: 18.0,
@@ -177,10 +171,11 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   width: 300,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                          (route) => false);
                     },
                     child: Text(
                       'Next',

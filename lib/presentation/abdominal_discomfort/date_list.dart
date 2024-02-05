@@ -8,14 +8,14 @@ import 'package:patient_app/data/sky_strings.dart/sky_img_source.dart';
 import 'package:patient_app/presentation/abdominal_discomfort/abdominal_discomfort.dart';
 import 'package:patient_app/presentation/otp_screen/otp_page.dart';
 
-class AppointmentDateList extends StatefulWidget {
-  const AppointmentDateList({Key? key}) : super(key: key);
+class DateList extends StatefulWidget {
+  const DateList({Key? key}) : super(key: key);
 
   @override
-  State<AppointmentDateList> createState() => _AppointmentDateListState();
+  State<DateList> createState() => _DateListPageState();
 }
 
-class _AppointmentDateListState extends State<AppointmentDateList> {
+class _DateListPageState extends State<DateList> {
   bool containerClicked = false;
   int selectedColumn = 0;
 
@@ -90,136 +90,134 @@ class _AppointmentDateListState extends State<AppointmentDateList> {
           ),
         ),
         body: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(14.0),
-                  decoration: BoxDecoration(
-                    color: ColorManager.lightBlueColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                      ),
-                    ],
-                  ),
-                  child: Center(
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            ImageSaource.kString4,
-                            height: 100,
-                            width: 100,
-                          ),
-                          SizedBox(width: 16.0),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                ScreenTitle.kDoctorName,
-                                style: GoogleFonts.cairo(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: ColorManager.primarywhiteColor,
-                                ),
-                              ),
-                              SizedBox(height: 16.0),
-                              Text(
-                                ScreenTitle.kGeneralPractitioner,
-                                style: GoogleFonts.roboto(
-                                  fontSize: 14,
-                                  color: ColorManager.primarywhiteColor,
-                                ),
-                              ),
-                              SizedBox(height: 16.0),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    ImageSaource.kEmail,
-                                    height: 30,
-                                    width: 30,
-                                  ),
-                                  SizedBox(width: 8.0),
-                                  Text(
-                                    HintString.kyears,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: ColorManager.primarywhiteColor,
-                                    ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  Image.asset(
-                                    ImageSaource.kheart,
-                                    height: 30,
-                                    width: 30,
-                                  ),
-                                  SizedBox(width: 10),
-                                  Text(
-                                    HintString.kpercentage,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: ColorManager.primarywhiteColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 16.0),
-                            ],
-                          ),
-                        ],
-                      ),
+          child: Center(
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(14.0),
+                    decoration: BoxDecoration(
+                      color: ColorManager.lightBlueColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        _showDateBottomSheet(context, DateTime.now());
-                      },
+                    child: Center(
                       child: Container(
-                        height: 410,
-                        child: DateRangePickerWidget(
-                          onDateRangeChanged: (dateRange) {
-                            if (dateRange != null && dateRange.start != null) {
-                              _showDateBottomSheet(context, dateRange.start!);
-                            }
-                          },
-                          doubleMonth: false,
-                          theme: CalendarTheme(
-                            selectedColor: ColorManager.lightBlueColor,
-                            dayNameTextStyle:
-                                TextStyle(color: Colors.black45, fontSize: 12),
-                            inRangeColor: Color(0xFFD9EDFA),
-                            inRangeTextStyle:
-                                TextStyle(color: ColorManager.lightBlueColor),
-                            selectedTextStyle: TextStyle(color: Colors.white),
-                            todayTextStyle:
-                                TextStyle(fontWeight: FontWeight.bold),
-                            defaultTextStyle:
-                                TextStyle(color: Colors.black, fontSize: 15),
-                            radius: 25,
-                            tileSize: 51,
-                            disabledTextStyle: TextStyle(color: Colors.grey),
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              ImageSaource.kString4,
+                              height: 100,
+                              width: 100,
+                            ),
+                            SizedBox(width: 16.0),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  ScreenTitle.kDoctorName,
+                                  style: GoogleFonts.cairo(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: ColorManager.primarywhiteColor,
+                                  ),
+                                ),
+                                SizedBox(height: 16.0),
+                                Text(
+                                  ScreenTitle.kGeneralPractitioner,
+                                  style: GoogleFonts.roboto(
+                                    fontSize: 14,
+                                    color: ColorManager.primarywhiteColor,
+                                  ),
+                                ),
+                                SizedBox(height: 16.0),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      ImageSaource.kEmail,
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(width: 8.0),
+                                    Text(
+                                      HintString.kyears,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: ColorManager.primarywhiteColor,
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Image.asset(
+                                      ImageSaource.kheart,
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      HintString.kpercentage,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: ColorManager.primarywhiteColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 16.0),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          _showDateBottomSheet(context, DateTime.now());
+                        },
+                        child: Container(
+                          height: 410,
+                          child: DateRangePickerWidget(
+                            onDateRangeChanged: (dateRange) {},
+                            doubleMonth: false,
+                            theme: CalendarTheme(
+                              selectedColor: ColorManager.lightBlueColor,
+                              dayNameTextStyle: TextStyle(
+                                  color: Colors.black45, fontSize: 12),
+                              inRangeColor: Color(0xFFD9EDFA),
+                              inRangeTextStyle:
+                                  TextStyle(color: ColorManager.lightBlueColor),
+                              selectedTextStyle: TextStyle(color: Colors.white),
+                              todayTextStyle:
+                                  TextStyle(fontWeight: FontWeight.bold),
+                              defaultTextStyle:
+                                  TextStyle(color: Colors.black, fontSize: 15),
+                              radius: 25,
+                              tileSize: 51,
+                              disabledTextStyle: TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -241,11 +239,14 @@ class _AppointmentDateListState extends State<AppointmentDateList> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                ScreenTitle.kTimeSlot,
-                style: GoogleFonts.cairo(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 19,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 11),
+                child: Text(
+                  ScreenTitle.kTimeSlot,
+                  style: GoogleFonts.cairo(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 19,
+                  ),
                 ),
               ),
               SizedBox(height: 10),

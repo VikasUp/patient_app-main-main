@@ -45,4 +45,31 @@ class ScreenTitle {
   static const String kAppointmentID = "Appointment ID: #KA87545";
   static const String kOk = "OK";
   static const String kAppointmentRequest = "Send Appointment Request";
+  static const String kHome = "Home";
+  static const String kUniversityname =
+      "Jordan University of Science and Technology";
+  static const String kCardHeading = "Medical School";
+  static const String kcardHeading2 = "2020";
+  static const String kheadtingText1 =
+      "Bachelor degree in Medicine and Surgery";
+  static const String kyears = "3 Years";
+  static const String kSpecialityin = "Speciality in";
+  static const String kBookNewVisit = "Book New Visit";
+  static const String kBookAHomeVisit = "Book A Home Visit";
+  static const String kNow = "Now!";
+  static const String kFullName = "Full Name";
+  static const String kenterName = "Please Enter Your full name";
+  static const String kEmailId = "Email ID";
+  static const String kenterEmail = "Please Enter Your Email";
+  static const String knumber = "Number";
+  static const String kEnterNumber = "Please Enter Your Number";
+  static const String kcheckupType = "Select Checkup Type";
+  static const String kentercheckupType = "Please Enter Your checkup type";
+  static const String kAddress = "Address";
+  static const String kEnterYourAdress = "Please Enter Your Address";
+  static const String kAreaCode = "Area Code";
+  static const String kEnterAreaCode = "Please Enter Your erea code";
+  static const String kdialougueText2 = "Your Appointment Slot Has Benn ";
+  static const String kAlreadyBooked = "Already Booked";
+  static const String kpleasechooseAnotherSlot ="Please Choose Another Slot";
 }

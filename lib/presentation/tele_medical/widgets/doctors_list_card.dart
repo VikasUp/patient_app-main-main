@@ -43,11 +43,11 @@ class _DoctorsListPageState extends State<DoctorsListPage> {
                   width: 50,
                 ),
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
                       builder: (context) => TeleMedicalList(),
-                    ),
+                    ),(route)=>false
                   );
                 },
               ),
@@ -368,11 +368,12 @@ class RectangularBoxWidget extends StatelessWidget {
                             width: size.width * 0.5,
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
+                                Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          AppointmentDateList()),
+                                          AppointmentDateList()),((route) => false
+                                          ),
                                 );
                               },
                               style: ElevatedButton.styleFrom(

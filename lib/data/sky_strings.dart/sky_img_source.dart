@@ -13,6 +13,13 @@ class ImageSaource {
       "assets/images/book_apointment_image.png";
   static const String kvideocallpng = "assets/images/video_call.png";
   static const String kdialougeBox = "assets/images/dialogue_box.png";
-}
+  static const String kdialougeBox2 = "assets/images/dialogue_box.png";
 
-const String primarycolor = "0xFF006064";
+  ///// **** Bottoom Naviagtion Bar Images ****///
+  static const String kmenu = "assets/images/home.png";
+  static const String kcategories = "assets/images/categories.png";
+  static const String knotes = "assets/images/notes.png";
+  static const String kshoppingCart = "assets/images/shopping-bag.png";
+  static const String kuser = "assets/images/user.png";
+  static const String kalreadybooked = "assets/images/alreadybook.png";
+}
