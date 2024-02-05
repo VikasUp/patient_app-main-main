@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:patient_app/data/sky_strings.dart/colors_manager.dart';
 import 'package:patient_app/utils/router_helper.dart';
 
 void main() async {

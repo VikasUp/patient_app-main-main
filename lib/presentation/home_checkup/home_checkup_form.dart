@@ -70,7 +70,12 @@ class _BookingScreenState extends State<BookingScreen> {
           color: Colors.grey,
           size: 20,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => HomeCheckUpPage()),
+              (route) => false);
+        },
       ),
       actions: [
         IconButton(
@@ -367,12 +372,10 @@ class _BookingScreenState extends State<BookingScreen> {
             Center(
               child: TextButton(
                 onPressed: () {
-                 
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => OtpPage()
-                    ),(route)=> false,
+                    MaterialPageRoute(builder: (context) => OtpPage()),
+                    (route) => false,
                   );
                 },
                 child: Container(

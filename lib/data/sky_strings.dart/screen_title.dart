@@ -4,7 +4,7 @@ class ScreenTitle {
   static const String kRates = "Ratings";
   static const String kLogout = "Logout";
   final String kLogin = "Login";
-  final String kRegister = "Register";
+  static const String kRegister = "Register";
   final String kLoginTypeSelection = "Login Type Selection";
   final String kVerifyOtp = "Verify Otp";
   final String kEditProfile = "Edit Profile";
@@ -72,4 +72,14 @@ class ScreenTitle {
   static const String kdialougueText2 = "Your Appointment Slot Has Benn ";
   static const String kAlreadyBooked = "Already Booked";
   static const String kpleasechooseAnotherSlot ="Please Choose Another Slot";
+  static const String kDonthaveacc = " Don't Have an account ?";
+  static const String kSignIn = "Sign In";
+  static const String kSignUp = "Sign Up";
+  static const String kWelcome = "Welcome";
+  static const String kSignInViaEmail ="Sign in via Email";
+  static const String kEnterAddreess ="Enter Addreess";
+  static const String kRememberMeClicked = "Remember Me Clicked";
+  static const String kCheckBoxClicked ="Check Box Clicked";
+  static const String kRemember = "Remember Me";
+  static const String kForgotPassword = "Forgot Pssword ?";
 }

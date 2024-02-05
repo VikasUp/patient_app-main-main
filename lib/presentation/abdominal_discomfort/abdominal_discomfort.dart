@@ -70,7 +70,6 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
               _buildSearchBar(size),
               const SizedBox(height: 16),
               _buildDoctorListHeader(),
-              const SizedBox(height: 16),
               _buildDoctorList(),
             ],
           ),
@@ -415,11 +414,11 @@ class RectangularBoxWidget extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DateList(),
-                            ),(route)=> false
-                          );
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DateList(),
+                              ),
+                              (route) => false);
                         },
                         style: ElevatedButton.styleFrom(
                           primary: myButtonColor,

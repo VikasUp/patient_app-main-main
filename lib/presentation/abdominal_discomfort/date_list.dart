@@ -254,7 +254,7 @@ class _DateListPageState extends State<DateList> {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 5),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),

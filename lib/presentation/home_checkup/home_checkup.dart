@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:patient_app/presentation/dashboard_screen/screens/dashboard.dart';
 import 'package:patient_app/presentation/home_checkup/home_checkup_form.dart';
 
 class HomeCheckUpPage extends StatefulWidget {
@@ -64,10 +65,18 @@ class _HomeCheckUpPageState extends State<HomeCheckUpPage> {
   Widget buildAppBarTitle() {
     return Row(
       children: [
-        Image.asset(
-          'assets/images/leading_action_button.png',
-          height: 40,
-          width: 40,
+        IconButton(
+          icon: Image.asset(
+            'assets/images/leading_action_button.png',
+            height: 40,
+            width: 40,
+          ),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => DashBoardScreen()),
+                (route) => false);
+          },
         ),
         SizedBox(width: 15),
         Expanded(
@@ -93,9 +102,9 @@ class _HomeCheckUpPageState extends State<HomeCheckUpPage> {
           ),
           onPressed: () {
             Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => BookingScreen()),(route)=>false
-            );
+                context,
+                MaterialPageRoute(builder: (context) => BookingScreen()),
+                (route) => false);
           },
         ),
       ],
@@ -136,7 +145,8 @@ class _HomeCheckUpPageState extends State<HomeCheckUpPage> {
         onPressed: () {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => BookingScreen()),(route)=> false,
+            MaterialPageRoute(builder: (context) => BookingScreen()),
+            (route) => false,
           );
         },
         style: ElevatedButton.styleFrom(

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:patient_app/data/sky_strings.dart/hint_strings.dart';
 import 'package:patient_app/data/sky_strings.dart/screen_title.dart';
 import 'package:patient_app/data/sky_strings.dart/sky_img_source.dart';
+import 'package:patient_app/presentation/dashboard_screen/screens/dashboard.dart';
 import 'package:patient_app/presentation/tele_medical/widgets/appointment_date_list.dart';
 import 'package:patient_app/presentation/tele_medical/widgets/teli_list.dart';
 import 'package:shimmer/shimmer.dart';
@@ -95,7 +96,12 @@ class _TeleMedicalPageState extends State<TeleMedicalPage> {
       automaticallyImplyLeading: false,
       title: buildAppBarTitle(),
       leading: IconButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => DashBoardScreen()),
+              (route) => false);
+        },
         icon: Icon(
           Icons.arrow_back_ios,
           size: 20,
