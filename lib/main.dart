@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: ColorManager.primarydarkGreenColor,
+      color: Colors.transparent,
       child: SafeArea(
         top: true,
         bottom: true,

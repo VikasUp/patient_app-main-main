@@ -193,7 +193,12 @@ class _DateListPageState extends State<DateList> {
                         child: Container(
                           height: 410,
                           child: DateRangePickerWidget(
-                            onDateRangeChanged: (dateRange) {},
+                            onDateRangeChanged: (dateRange) {
+                              if (dateRange != null &&
+                                  dateRange.start != null) {
+                                _showDateBottomSheet(context, dateRange.start!);
+                              }
+                            },
                             doubleMonth: false,
                             theme: CalendarTheme(
                               selectedColor: ColorManager.lightBlueColor,
