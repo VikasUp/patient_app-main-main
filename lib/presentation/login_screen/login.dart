@@ -18,32 +18,30 @@ class _LoginScreenState extends State<LoginScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: buildBackgroundDecoration(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 15,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 115),
-                buildLogoAndText(),
-                SizedBox(height: 10),
-                buildEmailTextField(),
-                buildPasswordTextField(),
-                buildRememberMeAndForgotPasswordRow(),
-                SizedBox(height: 10),
-                buildSignInButton(),
-                SizedBox(height: 10),
-                buildOrText(),
-                SizedBox(height: 5),
-                buildSocialLoginIconsRow(size),
-                SizedBox(height: 60),
-                buildSignUpText(),
-              ],
-            ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: buildBackgroundDecoration(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 140),
+              buildLogoAndText(),
+              SizedBox(height: 10),
+              buildEmailTextField(),
+              buildPasswordTextField(),
+              buildRememberMeAndForgotPasswordRow(),
+              SizedBox(height: 10),
+              buildSignInButton(),
+              SizedBox(height: 10),
+              buildOrText(),
+              SizedBox(height: 5),
+              buildSocialLoginIconsRow(size),
+              SizedBox(height: 60),
+              buildSignUpText(),
+            ],
           ),
         ),
       ),

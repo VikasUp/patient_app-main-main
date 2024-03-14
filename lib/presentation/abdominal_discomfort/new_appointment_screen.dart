@@ -1,6 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:patient_app/controllers/list_controller.dart';
 import 'package:patient_app/data/sky_strings.dart/colors_manager.dart';
 import 'package:patient_app/data/sky_strings.dart/screen_title.dart';
 import 'package:patient_app/data/sky_strings.dart/sky_img_source.dart';
@@ -11,16 +17,14 @@ import 'package:shimmer/shimmer.dart';
 
 class NewAppointmentPage extends StatefulWidget {
   NewAppointmentPage({Key? key}) : super(key: key);
-
   @override
   _NewAppointmentPageState createState() => _NewAppointmentPageState();
 }
 
 class _NewAppointmentPageState extends State<NewAppointmentPage> {
-  bool isLoading = false;
+  var controller = Get.put(ListController());
   TextEditingController _searchController = TextEditingController();
   List<String> filteredLabels = [];
-
   List<String> imagePaths = [
     'assets/images/dentist.png',
     'assets/images/cardiology.png',
@@ -28,7 +32,6 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
     'assets/images/pediatric.png',
     'assets/images/neurologist.png',
   ];
-
   List<String> labels = [
     'Dentist',
     'Cardiology',
@@ -36,7 +39,6 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
     'Pediatric',
     'Neurologist',
   ];
-
   List<String> subTitle = [
     '08 Doctor',
     '09 Doctor',
@@ -47,15 +49,9 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
 
   @override
   void initState() {
+    controller.getUsers();
+    print("++++${controller.departmentdata.value}");
     super.initState();
-    Future.delayed(Duration(seconds: 2), () {
-      if (mounted) {
-        setState(() {
-          isLoading = false;
-          filteredLabels = List.from(labels);
-        });
-      }
-    });
   }
 
   void _search() {
@@ -81,7 +77,7 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
           ),
           child: Scaffold(
             backgroundColor: Colors.transparent,
-            body: isLoading ? _buildLoadingBody() : _buildLoadedBody(),
+            body: _buildLoadedBody(),
           ),
         ),
       ),
@@ -130,13 +126,7 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
       ),
       leading: GestureDetector(
         onTap: () {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AppointmentPage(),
-            ),
-            (route) => false,
-          );
+          Navigator.pop(context);
         },
         child: Container(
           child: Icon(Icons.arrow_back_ios),
@@ -159,73 +149,75 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
           const SizedBox(height: 20),
           _buildSearchField(),
           const SizedBox(height: 20),
-          _buildCategoryList(),
+          Expanded(child: _buildCategoryList()),
         ],
       ),
     );
   }
 
   Widget _buildLoadedBody() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.grey,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AppointementPage(),
+                      ),
+                    );
+                  },
                 ),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AppointementPage(),
-                    ),
-                    ((route) => false),
-                  );
-                },
-              ),
-              SizedBox(width: 15),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                SizedBox(width: 15),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        ScreenTitle.knewAppointmentScreen,
+                        style: GoogleFonts.cairo(
+                          color: Color(0xFF006064),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Stack(
                   children: [
-                    Text(
-                      ScreenTitle.knewAppointmentScreen,
-                      style: GoogleFonts.cairo(
-                        color: Color(0xFF006064),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                    Container(
+                      height: 50,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(ImageSaource.kloginLogo),
+                        ),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ],
                 ),
-              ),
-              Stack(
-                children: [
-                  Container(
-                    height: 50,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(ImageSaource.kloginLogo),
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          _buildSearchField(),
-          const SizedBox(height: 16),
-          _buildCategoryList(),
-        ],
+              ],
+            ),
+            const SizedBox(height: 16),
+            _buildSearchField(),
+            const SizedBox(height: 16),
+            _buildCategoryList(),
+            const SizedBox(height: 50),
+          ],
+        ),
       ),
     );
   }
@@ -274,20 +266,81 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
   }
 
   Widget _buildCategoryList() {
+    Timer(Duration(seconds: 2), () {
+      setState(() {
+        controller.isLoading.value = false;
+      });
+    });
+
     return Container(
-      child: Expanded(
-        child: ListView.separated(
-          itemCount: filteredLabels.length,
-          separatorBuilder: (BuildContext context, int index) => Divider(),
+      height: MediaQuery.of(context).size.height * 0.8, // Adjust the height as needed
+      child: controller.isLoading.value
+          ? Shimmer.fromColors(
+        baseColor: Colors.grey,
+        highlightColor: Colors.grey,
+        child: Container(
+          child: Obx(
+                () => ListView.separated(
+              physics: NeverScrollableScrollPhysics(), // Disable scrolling when shimmering
+              shrinkWrap: true,
+              itemCount: controller.departmentdata.value,
+              separatorBuilder: (BuildContext context, int index) => Divider(
+                indent: 110,
+                thickness: 2,
+              ),
+              itemBuilder: (context, index) {
+                // final imagePaths = controller.newimages[index]?.image;
+
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AbdominalDiscomfortPage(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(1),
+                    ),
+                    child: Row(
+                      children: [
+                        _buildCategoryImage(index),
+                        SizedBox(width: 8),
+                        _buildCategoryDetails(index),
+                        Spacer(),
+                        _buildArrowIcon(),
+                      ],
+
+                    ),
+                  ),
+
+                );
+              },
+            ),
+          ),
+        ),
+      )
+          : Obx(
+            () => ListView.separated(
+          shrinkWrap: true,
+          itemCount: controller.departmentdata.value,
+          separatorBuilder: (BuildContext context, int index) => Divider(
+            indent: 110,
+            thickness: 2,
+          ),
           itemBuilder: (context, index) {
+            // final imagePaths = controller.newimages[index]?.image;
+
             return GestureDetector(
               onTap: () {
-                Navigator.pushAndRemoveUntil(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => AbdominalDiscomfortPage(),
                   ),
-                  (route) => false,
                 );
               },
               child: Container(
@@ -305,6 +358,7 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
                   ],
                 ),
               ),
+
             );
           },
         ),
@@ -312,7 +366,10 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
     );
   }
 
+
+
   Widget _buildCategoryImage(int index) {
+    final imageUrl = controller.departmentModel!.data![index].image ?? '';
     return Container(
       height: 95,
       width: 95,
@@ -324,12 +381,14 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
       child: Padding(
         padding: EdgeInsets.all(8.0),
         child: Center(
-          child: Image.asset(
-            imagePaths[index],
-            height: 50,
-            width: 44.56,
-            fit: BoxFit.contain,
-          ),
+          child: imageUrl.isNotEmpty
+              ? Image.network(
+                  imageUrl,
+                  height: 65,
+                  width: 85,
+                  fit: BoxFit.contain,
+                )
+              : Placeholder(),
         ),
       ),
     );
@@ -339,16 +398,20 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          filteredLabels[index],
-          style: GoogleFonts.cairo(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-            color: ColorManager.primarydarkGreenColor,
+        Row(
+          children: [ Text(
+            "${controller.departmentModel!.data![index].descriptionEng}",
+            style: GoogleFonts.cairo(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: ColorManager.primarydarkGreenColor,
+            ),
+            overflow: TextOverflow.visible,
           ),
+              ],
         ),
         Text(
-          subTitle[index],
+          "${controller.departmentModel!.data![index].doctorCount}",
           style: GoogleFonts.roboto(
             fontSize: 14,
           ),
@@ -356,6 +419,9 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
       ],
     );
   }
+
+
+
 
   Widget _buildArrowIcon() {
     return Icon(

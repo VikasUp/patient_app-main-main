@@ -43,17 +43,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(
-                ImageSaource.kbodyimageofapplication,
-                fit: BoxFit.cover,
-              ),
+      body: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            child: Image.asset(
+              ImageSaource.kbodyimageofapplication,
+              fit: BoxFit.cover,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 40),
               child: Column(
                 children: [
                   Row(
@@ -148,8 +150,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

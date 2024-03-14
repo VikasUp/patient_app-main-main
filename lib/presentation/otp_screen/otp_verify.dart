@@ -36,6 +36,8 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
 
   Widget buildBody() {
     return Container(
+      width: double.infinity,
+      height: double.infinity,
       decoration: buildBackgroundDecoration(),
       child: SingleChildScrollView(
         child: buildContent(),

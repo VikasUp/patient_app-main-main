@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:patient_app/data/sky_strings.dart/colors_manager.dart';
 import 'package:patient_app/data/sky_strings.dart/sky_img_source.dart';
 
 class MyBottomNavigationBar extends StatelessWidget {
@@ -77,14 +76,14 @@ class MyBottomNavigationBar extends StatelessWidget {
   GButton _buildNavButton(
       String imagePath, IconData icon, String text, int index) {
     return GButton(
-      leading: _buildLeadingContainer(imagePath),
+      leading: _buildLeadingContainer(imagePath, index),
       icon: icon,
       text: text,
       onPressed: () => onTabTapped(index),
     );
   }
 
-  Container _buildLeadingContainer(String imagePath) {
+  Container _buildLeadingContainer(String imagePath, int index) {
     return Container(
       width: 25,
       height: 25,
@@ -94,6 +93,9 @@ class MyBottomNavigationBar extends StatelessWidget {
             imagePath,
           ),
           fit: BoxFit.fitHeight,
+          colorFilter: index == selectedIndex
+              ? ColorFilter.mode(Colors.white, BlendMode.srcIn)
+              : null,
         ),
       ),
     );

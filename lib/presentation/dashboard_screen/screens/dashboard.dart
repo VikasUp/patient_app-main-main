@@ -1,17 +1,29 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:patient_app/presentation/FeedBack/feed_back_dashboard.dart';
+import 'package:patient_app/presentation/announcement/announcement_dashboard.dart';
+import 'package:patient_app/presentation/blood_request/blood_request_dashboard.dart';
+import 'package:patient_app/presentation/complain/complain_dashboard.dart';
 import 'package:patient_app/presentation/dashboard_screen/widgets/bottom_widgets.dart';
 import 'package:patient_app/data/sky_strings.dart/colors_manager.dart';
 import 'package:patient_app/data/sky_strings.dart/hint_strings.dart';
 import 'package:patient_app/data/sky_strings.dart/screen_title.dart';
 import 'package:patient_app/data/sky_strings.dart/sky_img_source.dart';
 import 'package:patient_app/presentation/abdominal_discomfort/appointment.dart';
+import 'package:patient_app/presentation/download_report/download_report.dart';
+import 'package:patient_app/presentation/emergency_services/emergency_dashboard.dart';
 import 'package:patient_app/presentation/home_checkup/home_checkup.dart';
+import 'package:patient_app/presentation/meal/meal_dashboard.dart';
+import 'package:patient_app/presentation/radiology_report/radiology_dashboard.dart';
+import 'package:patient_app/presentation/refill_page/refill_page.dart';
+import 'package:patient_app/presentation/sickness_track/sickness_track_user_page.dart';
 import 'package:patient_app/presentation/tele_medical/tele_medical.dart';
+import 'package:patient_app/presentation/vital_signs/vital_signs.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({Key? key}) : super(key: key);
-
   @override
   State<DashBoardScreen> createState() => _DashBoardScreenState();
 }
@@ -20,7 +32,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   int _selectedIndex = 0;
   TextEditingController _searchController = TextEditingController();
   List<String> filteredLabels = [];
-
   List<String> imagePaths = [
     'assets/images/appointment.png',
     'assets/images/consulting.png',
@@ -33,6 +44,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     'assets/images/complain.png',
     'assets/images/download_report.png',
     'assets/images/refil.png',
+    'assets/images/refill.svg',
+    'assets/images/Group 66700.png',
+    'assets/images/announcement.png',
+    'assets/images/feedback.png',
   ];
 
   List<String> labels = [
@@ -47,6 +62,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     'Complain',
     'Download Report',
     'Meal',
+    'Refill',
+    'Radiology',
+    'Announcement',
+    'FeedBack',
   ];
 
   @override
@@ -67,6 +86,23 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       filteredLabels =
           labels.where((label) => label.toLowerCase().contains(query)).toList();
     });
+  }
+
+  Route _createRoute({required Widget destination}) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => destination,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOut;
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
   }
 
   @override
@@ -99,6 +135,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               _buildSearchBar(size),
                               _buildServicesHeader(),
                               _buildServicesGrid(),
+                              SizedBox(
+                                height: 20,
+                              ),
                               _buildUpcomingSchedule(size),
                             ],
                           ),
@@ -176,35 +215,28 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   Widget _buildSearchBar(Size size) {
     return Center(
-      child: Card(
-        color: ColorManager.primarywhiteColor,
-        elevation: 5,
-        shape: RoundedRectangleBorder(
+      child: Container(
+        height: 59,
+        width: size.width / 0.8,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(30),
-          side: BorderSide(color: Colors.black, width: 0.5),
         ),
-        child: Container(
-          height: 50,
-          width: size.width / 0.8,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Center(
-            child: TextFormField(
-              controller: _searchController,
-              onChanged: (value) => _search(),
-              decoration: InputDecoration(
-                hintText: HintString.ksearch,
-                hintStyle: GoogleFonts.cairo(
-                  fontSize: 16,
-                  color: Color.fromARGB(255, 64, 64, 64),
-                ),
-                border: InputBorder.none,
-                prefixIcon: Icon(
-                  Icons.search,
-                  size: 20,
-                ),
+        child: Center(
+          child: TextFormField(
+            controller: _searchController,
+            onChanged: (value) => _search(),
+            decoration: InputDecoration(
+              hintText: HintString.ksearch,
+              hintStyle: GoogleFonts.cairo(
+                fontSize: 16,
+                color: Color.fromARGB(255, 64, 64, 64),
+              ),
+              border: InputBorder.none,
+              prefixIcon: Icon(
+                Icons.search,
+                size: 20,
               ),
             ),
           ),
@@ -261,26 +293,30 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   Widget _buildServicesGrid() {
     return Container(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return GridView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 16.0,
-              mainAxisSpacing: 20.0,
-            ),
-            itemCount: filteredLabels.length,
-            itemBuilder: (context, index) {
-              if (index < imagePaths.length && index < labels.length) {
-                return _buildServiceItem(index);
-              } else {
-                return SizedBox.shrink();
-              }
-            },
-          );
-        },
+      child: Hero(
+        transitionOnUserGestures: true,
+        tag: 'hello',
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 16.0,
+                mainAxisSpacing: 20.0,
+              ),
+              itemCount: filteredLabels.length,
+              itemBuilder: (context, index) {
+                if (index < imagePaths.length && index < labels.length) {
+                  return _buildServiceItem(index);
+                } else {
+                  return SizedBox.shrink();
+                }
+              },
+            );
+          },
+        ),
       ),
     );
   }
@@ -290,66 +326,107 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       onTap: () {
         switch (index) {
           case 0:
-            Navigator.pushAndRemoveUntil(
+            Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => AppointementPage(),
+              _createRoute(
+                destination: AppointementPage(),
               ),
-              (route) => false,
             );
 
             break;
           case 1:
-            Navigator.pushAndRemoveUntil(
+            Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => TeleMedicalPage(),
+              _createRoute(
+                destination: TeleMedicalPage(),
               ),
-              (route) => false,
             );
 
             break;
           case 2:
-            Navigator.pushAndRemoveUntil(
+            Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => HomeCheckUpPage(),
+              _createRoute(
+                destination: HomeCheckUpPage(),
               ),
-              (route) => false,
             );
-
+          case 3:
+            Navigator.push(
+              context,
+              _createRoute(
+                destination: SicknessTrackUserPage(),
+              ),
+            );
             break;
+          case 4:
+            Navigator.push(
+                context,
+                _createRoute(
+                  destination: VitalSigns(),
+                ));
+            break;
+          case 5:
+            Navigator.push(
+                context, _createRoute(destination: BloodRequestPage()));
+            break;
+          case 7:
+            Navigator.push(context,
+                _createRoute(destination: EmergencyServicesDashboard()));
+          case 8:
+            Navigator.push(
+                context, _createRoute(destination: ComplainDashboard()));
+          case 9:
+            Navigator.push(
+                context, _createRoute(destination: DownloadReport()));
+          case 10:
+            Navigator.push(context, _createRoute(destination: Meal()));
+          case 11:
+            Navigator.push(context, _createRoute(destination: RefillPills()));
+          case 12:
+            Navigator.push(
+                context, _createRoute(destination: RadiologyReport()));
+          case 13:
+            Navigator.push(
+                context, _createRoute(destination: AnnouncementDashboard()));
+          case 14:
+            Navigator.push(context, _createRoute(destination: FeedBack()));
         }
       },
       child: AspectRatio(
-        aspectRatio: 1.0,
-        child: Container(
-          width: 120.0,
-          height: 190.0,
-          decoration: BoxDecoration(
-            color: ColorManager.silverColor,
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 10),
-              Image.asset(
-                imagePaths[index],
-                width: 70,
-                height: 46,
-              ),
-              SizedBox(height: 5, width: 10),
-              Text(
-                filteredLabels[index],
-                textAlign: TextAlign.center,
-                style: GoogleFonts.cairo(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+        aspectRatio: 2.0,
+        child: Card(
+          child: Container(
+            width: 120.0,
+            height: 190.0,
+            decoration: BoxDecoration(
+              color: ColorManager.silverColor,
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 10),
+                !imagePaths[index].contains('svg')
+                    ? Image.asset(
+                        imagePaths[index],
+                        width: 70,
+                        height: 46,
+                      )
+                    : SvgPicture.asset(
+                        imagePaths[index],
+                      ),
+                SizedBox(height: 5, width: 10),
+                Text(
+                  filteredLabels[index],
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.cairo(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

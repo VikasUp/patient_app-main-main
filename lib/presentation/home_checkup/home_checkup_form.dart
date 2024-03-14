@@ -23,27 +23,101 @@ class _BookingScreenState extends State<BookingScreen> {
     var size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: ColorManager.primarywhiteColor,
+        image: DecorationImage(
+          alignment: Alignment(1.0, -1.0),
+          image: AssetImage(ImageSaource.kString1),
+        ),
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: buildAppBar(context),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Stack(
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildHeaderText(),
-                  buildForm(size),
-                ],
-              ),
-            ],
+      child: SafeArea(
+        child: Container(
+            child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            child: Column(
+              children: [
+                _buildAppBar(),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        buildHeaderText(),
+                        buildForm(size),
+                        SizedBox(
+                          height: 50,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                _buildTransparentButton(),
+              ],
+            ),
+          ),
+        )),
+      ),
+    );
+  }
+
+  Widget _buildAppBar() {
+    return _buildAppBarRow();
+  }
+
+  Widget _buildAppBarRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        _buildAppBarLeading(),
+        _buildAppBarTitle(),
+        Spacer(),
+        _buildAppBarAction(),
+      ],
+    );
+  }
+
+  Widget _buildAppBarLeading() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          color: const Color.fromARGB(255, 231, 229, 229),
+        ),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.grey.withOpacity(0.8),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildAppBarTitle() {
+    return Text(
+      'Book New Visit',
+      style: GoogleFonts.cairo(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: ColorManager.primarydarkGreenColor),
+    );
+  }
+
+  Widget _buildAppBarAction() {
+    return Row(
+      children: [
+        IconButton(
+            onPressed: () {},
+            icon: Image.asset(
+              ImageSaource.kloginLogo,
+              height: 55,
+              width: 55,
+            )),
+      ],
     );
   }
 
@@ -71,10 +145,7 @@ class _BookingScreenState extends State<BookingScreen> {
           size: 20,
         ),
         onPressed: () {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => HomeCheckUpPage()),
-              (route) => false);
+          Navigator.pop(context);
         },
       ),
       actions: [
@@ -83,7 +154,6 @@ class _BookingScreenState extends State<BookingScreen> {
             icon: Image.asset(ImageSaource.kloginLogo, height: 50, width: 50))
       ],
       flexibleSpace: Container(
-        height: 120,
         decoration: BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
@@ -146,7 +216,6 @@ class _BookingScreenState extends State<BookingScreen> {
           const SizedBox(height: 10),
           buildVisitTypeSelection(size),
           buildAgreementCheckBox(),
-          buildSubmitButton(),
         ],
       ),
     );
@@ -158,6 +227,7 @@ class _BookingScreenState extends State<BookingScreen> {
       width: size.width * 0.9,
       child: TextFormField(
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(8),
           labelText: labelText,
           filled: true,
           fillColor: Color.fromARGB(255, 237, 237, 237),
@@ -403,6 +473,71 @@ class _BookingScreenState extends State<BookingScreen> {
           ],
         );
       },
+    );
+  }
+
+  Widget _buildTransparentButton() {
+    return Positioned(
+      bottom: 0,
+      left: 0,
+      right: 0,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            splashColor: Colors.white.withOpacity(0.5),
+            onTap: () {},
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(40),
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF0B7F8C),
+                    ColorManager.primarydarkGreenColor,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: const Offset(
+                      4.0,
+                      4.0,
+                    ),
+                    blurRadius: 5.0,
+                    spreadRadius: 2.0,
+                  ),
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: const Offset(0.0, 0.0),
+                    blurRadius: 0.0,
+                    spreadRadius: 0.0,
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 17,
+                  ),
+                  child: Text(
+                    'Submit Refill Request',
+                    style: GoogleFonts.cairo(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

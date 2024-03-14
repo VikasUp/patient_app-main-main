@@ -43,12 +43,7 @@ class _DoctorsListPageState extends State<DoctorsListPage> {
                   width: 50,
                 ),
                 onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TeleMedicalList(),
-                    ),(route)=>false
-                  );
+                  Navigator.pop(context);
                 },
               ),
               SizedBox(
@@ -372,8 +367,8 @@ class RectangularBoxWidget extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          AppointmentDateList()),((route) => false
-                                          ),
+                                          AppointmentDateList()),
+                                  ((route) => false),
                                 );
                               },
                               style: ElevatedButton.styleFrom(

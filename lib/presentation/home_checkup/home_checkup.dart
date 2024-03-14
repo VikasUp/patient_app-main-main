@@ -4,10 +4,9 @@ import 'package:patient_app/presentation/dashboard_screen/screens/dashboard.dart
 import 'package:patient_app/presentation/home_checkup/home_checkup_form.dart';
 
 class HomeCheckUpPage extends StatefulWidget {
-  const HomeCheckUpPage({Key? key}) : super(key: key);
-
-  @override
-  _HomeCheckUpPageState createState() => _HomeCheckUpPageState();
+const HomeCheckUpPage({Key? key}) : super(key: key);
+@override
+_HomeCheckUpPageState createState() => _HomeCheckUpPageState();
 }
 
 class _HomeCheckUpPageState extends State<HomeCheckUpPage> {

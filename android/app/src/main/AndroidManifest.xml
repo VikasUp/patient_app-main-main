@@ -18,6 +18,8 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEOS"/>
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:label="patient_app"
@@ -48,6 +50,9 @@
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
             android:name="flutterEmbedding"
-            android:value="2" />
+            android:value="2"/>
+             <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyAXD0dhFPobUxZTDvqPOdbzRe6Sr0y5bbY"/>
+            
     </application>
 </manifest>

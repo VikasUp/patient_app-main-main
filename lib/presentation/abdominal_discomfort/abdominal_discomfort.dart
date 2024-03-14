@@ -33,7 +33,6 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
   @override
   void initState() {
     super.initState();
-
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
         showShimmer = false;
@@ -49,6 +48,23 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
           .where((label) => label.toLowerCase().contains(query))
           .toList();
     });
+  }
+
+  Route _createRoute({required Widget destination}) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => destination,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOut;
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
   }
 
   @override
@@ -86,12 +102,11 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
       title: _buildAppBarTitle(size),
       leading: GestureDetector(
         onTap: () {
-          Navigator.pushAndRemoveUntil(
+          Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => NewAppointmentPage(),
+            _createRoute(
+              destination: NewAppointmentPage(),
             ),
-            (route) => false,
           );
         },
         child: Container(
@@ -297,12 +312,10 @@ class RectangularBoxWidget extends StatelessWidget {
   final String doctorName;
   const RectangularBoxWidget({Key? key, required this.doctorName})
       : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     Color myButtonColor = Color.fromARGB(255, 68, 180, 191);
-
     return Container(
       height: 250,
       margin: EdgeInsets.symmetric(vertical: 8.0),

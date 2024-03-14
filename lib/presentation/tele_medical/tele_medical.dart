@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:patient_app/data/sky_strings.dart/colors_manager.dart';
 import 'package:patient_app/data/sky_strings.dart/hint_strings.dart';
 import 'package:patient_app/data/sky_strings.dart/screen_title.dart';
 import 'package:patient_app/data/sky_strings.dart/sky_img_source.dart';
@@ -77,14 +78,106 @@ class _TeleMedicalPageState extends State<TeleMedicalPage> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: ColorManager.primarywhiteColor,
+        image: DecorationImage(
+          alignment: Alignment(1.0, -1.0),
+          image: AssetImage(ImageSaource.kString1),
+        ),
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: buildAppBar(),
-        body: buildBody(),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Stack(
+            children: [
+              Column(
+                children: [
+                  _buildAppBar(),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          buildHeaderText(),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          buildSearchBar(),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          buildCategorySection(),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          buildDoctorsList(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAppBar() {
+    return _buildAppBarRow();
+  }
+
+  Widget _buildAppBarRow() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+      child: Row(
+        children: [
+          Material(
+            child: InkWell(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.arrow_back_ios_outlined,
+                    color: Colors.grey,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            'Tele Medical',
+            style: GoogleFonts.cairo(
+              color: Color(0xFF006064),
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          Spacer(),
+          Container(
+            height: 50,
+            width: 50,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(ImageSaource.kloginLogo),
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -97,10 +190,7 @@ class _TeleMedicalPageState extends State<TeleMedicalPage> {
       title: buildAppBarTitle(),
       leading: IconButton(
         onPressed: () {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => DashBoardScreen()),
-              (route) => false);
+          Navigator.pop(context);
         },
         icon: Icon(
           Icons.arrow_back_ios,
@@ -113,12 +203,11 @@ class _TeleMedicalPageState extends State<TeleMedicalPage> {
           padding: EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () {
-              Navigator.pushAndRemoveUntil(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => TeleMedicalList(),
                 ),
-                (route) => false,
               );
             },
             child: Ink(
@@ -174,127 +263,74 @@ class _TeleMedicalPageState extends State<TeleMedicalPage> {
     );
   }
 
-  // Widget buildFloatingActionButton() {
-  //   return Stack(
-  //     children: [
-  //       Container(
-  //         height: 150,
-  //         width: 180,
-  //         decoration: BoxDecoration(
-  //           borderRadius: BorderRadius.circular(10),
-  //         ),
-  //       ),
-  //       Positioned(
-  //         top: 40,
-  //         left: 115,
-  //         child: IconButton(
-  //           icon: Image.asset(
-  //             'assets/images/floating_action_button.png',
-  //             height: 50,
-  //             width: 50,
-  //           ),
-  //           onPressed: () {
-  //             Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                 builder: (context) => TeleMedicalList(),
-  //               ),
-  //             );
-  //           },
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  Widget buildBody() {
-    return ListView(
-      physics: ScrollPhysics(),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      children: [
-        buildHeaderText(),
-        SizedBox(height: 38),
-        buildSearchBar(),
-        SizedBox(height: 16),
-        buildCategorySection(),
-        SizedBox(height: 16),
-        buildDoctorsList(),
-      ],
-    );
-  }
-
   Widget buildHeaderText() {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         const SizedBox(width: 9.0, height: 20.0),
-        Text(
-          'Find Your Desired',
-          style: GoogleFonts.cairo(
-            fontSize: 30.0,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(width: 9.0, height: 30.0),
-        DefaultTextStyle(
-          style: GoogleFonts.cairo(
-            fontSize: 20.0,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF006064),
-          ),
-          child: buildAnimatedText(),
-        ),
-      ],
-    );
-  }
-
-  Widget buildAnimatedText() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AnimatedTextKit(
-          animatedTexts: [
-            RotateAnimatedText('Specialist', duration: Duration(seconds: 2)),
-            RotateAnimatedText('Doctor', duration: Duration(seconds: 2)),
-            RotateAnimatedText(
-              'With us',
-              duration: Duration(seconds: 8),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Text(
+            'Find Your Desired',
+            style: GoogleFonts.cairo(
+              fontSize: 30.0,
+              fontWeight: FontWeight.w600,
             ),
-          ],
-          onTap: () {
-            print("Tap Event");
-          },
-          pause: Duration(seconds: 2),
+          ),
         ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            children: [
+              Text(
+                'Specialist',
+                style: GoogleFonts.roboto(
+                    color: ColorManager.primarydarkGreenColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 23),
+              ),
+            ],
+          ),
+        )
       ],
     );
   }
 
   Widget buildSearchBar() {
-    return Card(
-      elevation: 5,
-      color: Colors.white,
-      shadowColor: Colors.grey.withOpacity(1),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25),
-        side: BorderSide(color: Colors.black, width: 0.3),
-      ),
-      child: Container(
-        height: 58,
-        width: MediaQuery.of(context).size.width / 1.2,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 2,
-        ),
-        child: Center(
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText: HintString.ksearch,
-              hintStyle: GoogleFonts.cairo(fontSize: 16),
-              border: InputBorder.none,
-              prefixIcon: Icon(
-                Icons.search,
-                size: 28,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(40),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 2,
+          ),
+          child: Center(
+            child: TextFormField(
+              decoration: InputDecoration(
+                hintText: HintString.ksearch,
+                hintStyle: GoogleFonts.cairo(fontSize: 16),
+                border: InputBorder.none,
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.grey,
+                  size: 28,
+                ),
               ),
             ),
           ),
@@ -316,7 +352,7 @@ class _TeleMedicalPageState extends State<TeleMedicalPage> {
 
   Widget buildCategoryHeader() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -324,7 +360,7 @@ class _TeleMedicalPageState extends State<TeleMedicalPage> {
             "Choose Category",
             style: GoogleFonts.cairo(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w700,
             ),
           ),
           buildViewAllText(),
@@ -360,22 +396,27 @@ class _TeleMedicalPageState extends State<TeleMedicalPage> {
   }
 
   Widget buildCategoryList() {
-    return Container(
-      height: 100,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: imageList.length,
-        itemBuilder: (BuildContext context, int index) {
-          final imageModel = imageList[index];
-          return buildCategoryItem(imageModel);
-        },
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+      ),
+      child: Container(
+        height: 108,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: imageList.length,
+          itemBuilder: (BuildContext context, int index) {
+            final imageModel = imageList[index];
+            return buildCategoryItem(imageModel);
+          },
+        ),
       ),
     );
   }
 
   Widget buildCategoryItem(ImageModel imageModel) {
     return Container(
-      margin: const EdgeInsets.all(5.0),
+      margin: const EdgeInsets.symmetric(horizontal: 11, vertical: 4),
       decoration: BoxDecoration(
         color: Color(0xFFF6F7FA),
         boxShadow: [
@@ -389,9 +430,9 @@ class _TeleMedicalPageState extends State<TeleMedicalPage> {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Container(
-        width: 90,
+        width: 95,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(6.0),
           border: Border.all(color: Color(0xFF006064), width: 1),
         ),
         child: Column(
@@ -420,7 +461,7 @@ class _TeleMedicalPageState extends State<TeleMedicalPage> {
 
   Widget buildDoctorsHeader() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -428,7 +469,7 @@ class _TeleMedicalPageState extends State<TeleMedicalPage> {
             "Doctors List",
             style: GoogleFonts.cairo(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w700,
             ),
           ),
           buildViewAllText(),

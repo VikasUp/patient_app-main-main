@@ -22,5 +22,8 @@ class ImageSaource {
   static const String kshoppingCart = "assets/images/shopping-bag.png";
   static const String kuser = "assets/images/user.png";
   static const String kalreadybooked = "assets/images/alreadybook.png";
-  static const String kbodyimageofapplication =  'assets/images/authentication_background.png';
+  static const String kbodyimageofapplication =
+      'assets/images/authentication_background.png';
+  static const String kbloodRequestBgImage =
+      'assets/images/blood-request-bg.png';
 }
