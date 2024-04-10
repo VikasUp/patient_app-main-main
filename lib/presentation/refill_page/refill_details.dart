@@ -395,7 +395,7 @@ class _RefillDetailsState extends State<RefillDetails> {
                   child: Container(
                     alignment: Alignment.center,
                     width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: EdgeInsets.symmetric(vertical: 15),
                     child: Text(
                       'Select Medicines',
                       style: GoogleFonts.cairo(

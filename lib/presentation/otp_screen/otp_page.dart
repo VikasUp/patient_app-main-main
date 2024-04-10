@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:patient_app/presentation/abdominal_discomfort/date_list.dart';
 import 'package:patient_app/presentation/login_screen/login.dart';
 import 'package:patient_app/presentation/login_screen/sign_up_page.dart';
 import 'package:patient_app/presentation/otp_screen/otp_verify.dart';
@@ -42,14 +41,10 @@ class _OtpPageState extends State<OtpPage> {
   IconButton buildBackIconButton() {
     return IconButton(
       onPressed: () {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => DateList()),
-          (route) => false,
-        );
+        Navigator.pop(context);
       },
       icon: Icon(
-        Icons.arrow_back_ios,
+        Icons.arrow_back_ios,  
         color: Colors.grey,
         size: 25,
       ),

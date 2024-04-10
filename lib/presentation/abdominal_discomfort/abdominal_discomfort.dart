@@ -10,7 +10,6 @@ import 'package:patient_app/presentation/abdominal_discomfort/date_list.dart';
 
 class AbdominalDiscomfortPage extends StatefulWidget {
   const AbdominalDiscomfortPage({Key? key}) : super(key: key);
-
   @override
   State<AbdominalDiscomfortPage> createState() =>
       _AbdominalDiscomfortPageState();
@@ -28,7 +27,7 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
 
   bool showShimmer = true;
   TextEditingController _searchController = TextEditingController();
-  List<String> filteredLabels = [];
+  List<String> somethingLabe = [];
 
   @override
   void initState() {
@@ -36,7 +35,7 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
         showShimmer = false;
-        filteredLabels = List.from(doctorNames);
+        somethingLabe = List.from(doctorNames);
       });
     });
   }
@@ -44,7 +43,7 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
   void _search() {
     String query = _searchController.text.toLowerCase();
     setState(() {
-      filteredLabels = doctorNames
+      somethingLabe = doctorNames
           .where((label) => label.toLowerCase().contains(query))
           .toList();
     });
@@ -102,12 +101,7 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
       title: _buildAppBarTitle(size),
       leading: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            _createRoute(
-              destination: NewAppointmentPage(),
-            ),
-          );
+          Navigator.pop(context);
         },
         child: Container(
             child: Icon(
@@ -289,18 +283,18 @@ class _AbdominalDiscomfortPageState extends State<AbdominalDiscomfortPage> {
   Widget _buildDoctorList() {
     return Expanded(
       child: ListView.builder(
-        itemCount: filteredLabels.length,
+        itemCount: somethingLabe.length,
         itemBuilder: (context, index) {
           return showShimmer
               ? Shimmer.fromColors(
                   baseColor: ColorManager.primarydarkGreenColor,
                   highlightColor: Colors.white,
                   child: RectangularBoxWidget(
-                    doctorName: filteredLabels[index],
+                    doctorName: somethingLabe[index],
                   ),
                 )
               : RectangularBoxWidget(
-                  doctorName: filteredLabels[index],
+                  doctorName: somethingLabe[index],
                 );
         },
       ),

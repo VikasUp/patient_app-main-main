@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:palette_generator/palette_generator.dart';
@@ -362,42 +363,50 @@ class _VitalSignsState extends State<VitalSigns> {
                           SizedBox(
                             height: 10,
                           ),
-                          Text(
-                            entries[index],
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text('Last 4 hours ',
-                              style: GoogleFonts.roboto(
-                                  fontSize: 12, color: Colors.grey)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
+                          FadeInUp(
                             child: Text(
-                              '141/90',
-                              style: GoogleFonts.roboto(
-                                fontSize: 20,
-                                color: index % 2 == 0
-                                    ? splineChartColor
-                                    : barChartColor,
+                              entries[index],
+                              style: TextStyle(
+                                fontSize: 17,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          Container(
-                            child: Text(
-                              '7 min ago',
-                              style: GoogleFonts.roboto(
-                                fontSize: 15,
-                                color: index % 2 == 0
-                                    ? splineChartColor
-                                    : barChartColor,
+                          SizedBox(
+                            height: 5,
+                          ),
+                          FadeInDown(
+                            child: Text('Last 4 hours ',
+                                style: GoogleFonts.roboto(
+                                    fontSize: 12, color: Colors.grey)),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          FadeInRight(
+                            child: Container(
+                              child: Text(
+                                '141/90',
+                                style: GoogleFonts.roboto(
+                                  fontSize: 20,
+                                  color: index % 2 == 0
+                                      ? splineChartColor
+                                      : barChartColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          FadeInLeft(
+                            child: Container(
+                              child: Text(
+                                '7 min ago',
+                                style: GoogleFonts.roboto(
+                                  fontSize: 15,
+                                  color: index % 2 == 0
+                                      ? splineChartColor
+                                      : barChartColor,
+                                ),
                               ),
                             ),
                           ),
@@ -425,28 +434,30 @@ class _VitalSignsState extends State<VitalSigns> {
       height: 140,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: SfCartesianChart(
-          enableAxisAnimation: true,
-          borderColor: Colors.transparent,
-          primaryXAxis: CategoryAxis(
-            isVisible: true,
-            labelStyle: GoogleFonts.roboto(
-                fontWeight: FontWeight.bold, color: Colors.black),
-          ),
-          primaryYAxis: NumericAxis(
-            borderWidth: 0,
-            isVisible: false,
-            majorGridLines: MajorGridLines(width: 0),
-            minorGridLines: MinorGridLines(width: 0),
-          ),
-          series: <CartesianSeries>[
-            SplineSeries<ChartData, String>(
-              color: splineChartColor,
-              dataSource: chartData,
-              xValueMapper: (ChartData data, _) => data.x,
-              yValueMapper: (ChartData data, _) => data.y,
+        child: FadeInDown(
+          child: SfCartesianChart(
+            enableAxisAnimation: true,
+            borderColor: Colors.transparent,
+            primaryXAxis: CategoryAxis(
+              isVisible: true,
+              labelStyle: GoogleFonts.roboto(
+                  fontWeight: FontWeight.bold, color: Colors.black),
             ),
-          ],
+            primaryYAxis: NumericAxis(
+              borderWidth: 0,
+              isVisible: false,
+              majorGridLines: MajorGridLines(width: 0),
+              minorGridLines: MinorGridLines(width: 0),
+            ),
+            series: <CartesianSeries>[
+              SplineSeries<ChartData, String>(
+                color: splineChartColor,
+                dataSource: chartData,
+                xValueMapper: (ChartData data, _) => data.x,
+                yValueMapper: (ChartData data, _) => data.y,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -457,38 +468,40 @@ class _VitalSignsState extends State<VitalSigns> {
       height: 150,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: SfCartesianChart(
-          plotAreaBackgroundColor: Colors.transparent,
-          margin: EdgeInsets.symmetric(vertical: 20),
-          borderColor: Colors.transparent,
-          borderWidth: 2,
-          plotAreaBorderWidth: 0,
-          enableAxisAnimation: true,
-          enableSideBySideSeriesPlacement: false,
-          primaryXAxis: CategoryAxis(
-            labelStyle: GoogleFonts.roboto(
-                fontWeight: FontWeight.bold, color: Colors.black),
+        child: FadeInUp(
+          child: SfCartesianChart(
+            plotAreaBackgroundColor: Colors.transparent,
+            margin: EdgeInsets.symmetric(vertical: 20),
+            borderColor: Colors.transparent,
+            borderWidth: 2,
+            plotAreaBorderWidth: 0,
+            enableAxisAnimation: true,
+            enableSideBySideSeriesPlacement: false,
+            primaryXAxis: CategoryAxis(
+              labelStyle: GoogleFonts.roboto(
+                  fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+            primaryYAxis: CategoryAxis(
+              isVisible: false,
+              labelStyle: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            series: <CartesianSeries>[
+              ColumnSeries<ChartData, String>(
+                  borderRadius: BorderRadius.circular(20),
+                  dataSource: chartData,
+                  width: 0.3,
+                  color: Colors.black,
+                  xValueMapper: (ChartData data, _) => data.x,
+                  yValueMapper: (ChartData data, _) => data.y),
+              ColumnSeries<ChartData, String>(
+                  borderRadius: BorderRadius.circular(20),
+                  dataSource: chartData,
+                  width: 0.3,
+                  color: barChartColor,
+                  xValueMapper: (ChartData data, _) => data.x,
+                  yValueMapper: (ChartData data, _) => data.y)
+            ],
           ),
-          primaryYAxis: CategoryAxis(
-            isVisible: false,
-            labelStyle: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          series: <CartesianSeries>[
-            ColumnSeries<ChartData, String>(
-                borderRadius: BorderRadius.circular(20),
-                dataSource: chartData,
-                width: 0.3,
-                color: Colors.black,
-                xValueMapper: (ChartData data, _) => data.x,
-                yValueMapper: (ChartData data, _) => data.y),
-            ColumnSeries<ChartData, String>(
-                borderRadius: BorderRadius.circular(20),
-                dataSource: chartData,
-                width: 0.3,
-                color: barChartColor,
-                xValueMapper: (ChartData data, _) => data.x,
-                yValueMapper: (ChartData data, _) => data.y)
-          ],
         ),
       ),
     );

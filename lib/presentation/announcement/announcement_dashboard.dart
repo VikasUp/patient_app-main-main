@@ -7,7 +7,6 @@ import 'package:patient_app/data/sky_strings.dart/colors_manager.dart';
 import 'package:patient_app/data/sky_strings.dart/hint_strings.dart';
 import 'package:patient_app/data/sky_strings.dart/screen_title.dart';
 import 'package:patient_app/data/sky_strings.dart/sky_img_source.dart';
-import 'package:patient_app/presentation/announcement/detail_announcement.dart';
 import 'package:patient_app/presentation/dashboard_screen/screens/dashboard.dart';
 import 'package:patient_app/presentation/vital_signs/progress_indicator.dart';
 
@@ -197,12 +196,7 @@ class _AnnouncementDashboardState extends State<AnnouncementDashboard> {
         ),
         child: GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetailAnnouncement(),
-              ),
-            );
+           
           },
           child: Container(
             decoration: BoxDecoration(

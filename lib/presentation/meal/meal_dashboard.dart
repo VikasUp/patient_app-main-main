@@ -39,6 +39,8 @@ class _MealState extends State<Meal> {
     'Dinner',
     'Fruits',
   ];
+
+  
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -7,6 +7,7 @@ import 'package:patient_app/data/sky_strings.dart/colors_manager.dart';
 import 'package:patient_app/data/sky_strings.dart/screen_title.dart';
 import 'package:patient_app/data/sky_strings.dart/sky_img_source.dart';
 import 'package:patient_app/presentation/dashboard_screen/screens/dashboard.dart';
+import 'package:patient_app/presentation/radiology_report/downloaded_reports.dart';
 import 'package:share_plus/share_plus.dart';
 
 class RadiologyDownloadReport extends StatefulWidget {
@@ -88,7 +89,7 @@ class _RadiologyDownloadReportState extends State<RadiologyDownloadReport>
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
         child: SvgPicture.asset(
-          "assets/images/radio_dashboard.svg",
+          "assets/animations/Animation - 1709557115705.json",
         ),
       ),
     );
@@ -119,7 +120,6 @@ class _RadiologyDownloadReportState extends State<RadiologyDownloadReport>
                           height: 5,
                         ),
                         _downloadContainer(),
-                        _imageContaienr(),
                       ],
                     ),
                   ),
@@ -181,7 +181,7 @@ class _RadiologyDownloadReportState extends State<RadiologyDownloadReport>
 
   Widget _buildAppBarTitle() {
     return Text(
-      _currentAppBarTitle,
+      'Radiology Report',
       style: GoogleFonts.cairo(
           fontSize: 18,
           fontWeight: FontWeight.bold,
@@ -229,9 +229,28 @@ class _RadiologyDownloadReportState extends State<RadiologyDownloadReport>
                     children: [
                       SvgPicture.asset('assets/images/pdf.svg'),
                       SizedBox(
-                        width: 10,
+                        width: 5,
                       ),
-                      Text('Knee Surgery')
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            'Knee Surgery',
+                            style:
+                                GoogleFonts.cairo(fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Text(
+                            'Realse Date: 22/02/2023',
+                            style: GoogleFonts.roboto(color: Colors.grey),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -243,7 +262,12 @@ class _RadiologyDownloadReportState extends State<RadiologyDownloadReport>
                       foregroundColor: Colors.white,
                       textStyle: GoogleFonts.cairo(fontSize: 14),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DownloadedReports()));
+                    },
                     child: Text('Download'),
                     // other arguments
                   ),
@@ -251,7 +275,7 @@ class _RadiologyDownloadReportState extends State<RadiologyDownloadReport>
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
               child: Text(
                 'Oral surgery is broad term for any operation performed\n on your teeth, gums, jaw, or surrounding oral and facial\n structures. it includes a wide range of procedure\n, including teeth extractions, dental bone grafts,\n pariodontal (gum) grafts and currective jaw surgery.\n '
                 ' \n  '
@@ -260,15 +284,10 @@ class _RadiologyDownloadReportState extends State<RadiologyDownloadReport>
                 style: GoogleFonts.roboto(color: Colors.grey),
               ),
             ),
+            Image.asset('assets/images/10352123.jpg'),
           ]),
         ),
       ),
     );
   }
-}
-
-Widget _imageContaienr() {
-  return Container(
-    child: SvgPicture.asset('assets/images/Mask Group 206.svg'),
-  );
 }

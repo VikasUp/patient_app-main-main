@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:patient_app/presentation/FeedBack/feed_back_dashboard.dart';
 import 'package:patient_app/presentation/announcement/announcement_dashboard.dart';
 import 'package:patient_app/presentation/blood_request/blood_request_dashboard.dart';
@@ -68,15 +69,26 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     'FeedBack',
   ];
 
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
     filteredLabels = labels;
+    loadData();
   }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+    });
+  }
+
+  void loadData() {
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
     });
   }
 
@@ -293,31 +305,33 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   Widget _buildServicesGrid() {
     return Container(
-      child: Hero(
-        transitionOnUserGestures: true,
-        tag: 'hello',
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return GridView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 16.0,
-                mainAxisSpacing: 20.0,
+      child: isLoading
+          ? _buildLoadingWidget()
+          : Hero(
+              transitionOnUserGestures: true,
+              tag: 'hello',
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 16.0,
+                      mainAxisSpacing: 20.0,
+                    ),
+                    itemCount: filteredLabels.length,
+                    itemBuilder: (context, index) {
+                      if (index < imagePaths.length && index < labels.length) {
+                        return _buildServiceItem(index);
+                      } else {
+                        return SizedBox.shrink();
+                      }
+                    },
+                  );
+                },
               ),
-              itemCount: filteredLabels.length,
-              itemBuilder: (context, index) {
-                if (index < imagePaths.length && index < labels.length) {
-                  return _buildServiceItem(index);
-                } else {
-                  return SizedBox.shrink();
-                }
-              },
-            );
-          },
-        ),
-      ),
+            ),
     );
   }
 
@@ -605,6 +619,15 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildLoadingWidget() {
+    return Center(
+      child: LoadingAnimationWidget.dotsTriangle(
+        size: 50,
+        color: ColorManager.darkblueColor,
+      ),
     );
   }
 }

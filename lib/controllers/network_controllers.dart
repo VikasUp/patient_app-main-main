@@ -6,7 +6,7 @@ import 'package:patient_app/data/sky_strings.dart/colors_manager.dart';
 class NetworkController extends GetxController {
   final Connectivity _connectivity = Connectivity();
   RxBool isOnline = true.obs;
-  
+
   @override
   void onInit() {
     super.onInit();

@@ -235,6 +235,8 @@ flutter:
     - assets/images/Animation - 1709557115705.gif
     - assets/images/10352123.jpg
     - assets/images/Group 66715.svg
+    - assets/images/Mask Group 206.svg
+    - assets/images/jpg (1).svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:patient_app/data/sky_strings.dart/label_text.dart';
 import 'package:patient_app/data/sky_strings.dart/screen_title.dart';
 import 'package:patient_app/data/sky_strings.dart/sky_img_source.dart';
+import 'package:patient_app/presentation/login_screen/forgot_password.dart';
 import 'package:patient_app/presentation/login_screen/sign_up_page.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -174,8 +175,16 @@ class _LoginScreenState extends State<LoginScreen> {
   Column buildForgotPasswordText() {
     return Column(
       children: [
-        Text(ScreenTitle.kForgotPassword,
-            style: GoogleFonts.roboto(fontWeight: FontWeight.w700)),
+        TextButton(
+          child: Text(
+            "Forgot Password ?",
+            style: TextStyle(fontSize: 15, color: Colors.black),
+          ),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ForgotPassword()));
+          },
+        )
       ],
     );
   }

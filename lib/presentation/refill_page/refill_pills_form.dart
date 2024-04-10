@@ -473,7 +473,7 @@ class _RefillPillsFormState extends State<RefillPillsForm> {
                   child: Container(
                     alignment: Alignment.center,
                     width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: EdgeInsets.symmetric(vertical: 16),
                     child: Text(
                       'Continue',
                       style: GoogleFonts.cairo(

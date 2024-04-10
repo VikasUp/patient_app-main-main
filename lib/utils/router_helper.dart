@@ -4,6 +4,7 @@ import 'package:patient_app/presentation/abdominal_discomfort/appointment.dart';
 import 'package:patient_app/presentation/abdominal_discomfort/date_list.dart';
 import 'package:patient_app/presentation/abdominal_discomfort/new_appointment_screen.dart';
 import 'package:patient_app/presentation/dashboard_screen/screens/dashboard.dart';
+import 'package:patient_app/presentation/login_screen/otp_auth.dart';
 import '../presentation/splash.dart';
 import 'app_routes.dart';
 
@@ -36,6 +37,10 @@ class AppRouter {
       case AppRoutes.onBoarding:
         return MaterialPageRoute(
           builder: (_) => DateList(),
+        );
+      case AppRoutes.otpAuthentication:
+        return MaterialPageRoute(
+          builder: (_) => OtpAuthenticationPage(phoneNumber: '',),
         );
       default:
         return MaterialPageRoute(

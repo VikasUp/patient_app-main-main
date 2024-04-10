@@ -6,6 +6,7 @@ class AppRoutes {
   static const String newAppointment = 'New Appointment';
   static const String abdominalDiscomfort ='Abdominal Discomfort';
   static const String dateList ='Date List';
+   static const String otpAuthentication ='Otp List';
   
   // static const String login = 'login';
   // static const String otpScreen = 'loginWithOtpScreen';

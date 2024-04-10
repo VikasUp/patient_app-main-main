@@ -33,13 +33,6 @@ class _RadiologyReportState extends State<RadiologyReport> {
     _currentAppBarTitle = ScreenTitle.kDownloadPage;
   }
 
-  void _onDeleteImage(int position) {
-    setState(() {
-      imagePaths.removeAt(position);
-      imageNames.removeAt(position);
-    });
-  }
-
   void handleShare() {
     if (selectedFile != null) {
       Share.shareFiles([selectedFile!.path]);
@@ -184,7 +177,7 @@ class _RadiologyReportState extends State<RadiologyReport> {
 
   Widget _buildAppBarTitle() {
     return Text(
-      _currentAppBarTitle,
+      'Radiology Report',
       style: GoogleFonts.cairo(
           fontSize: 18,
           fontWeight: FontWeight.bold,
@@ -552,7 +545,7 @@ class _RadiologyReportState extends State<RadiologyReport> {
                                         alignment: Alignment.center,
                                         width: double.infinity,
                                         padding:
-                                            EdgeInsets.symmetric(vertical: 17),
+                                            EdgeInsets.symmetric(vertical: 15),
                                         child: Text(
                                           'Download',
                                           style: GoogleFonts.cairo(
@@ -577,7 +570,7 @@ class _RadiologyReportState extends State<RadiologyReport> {
                   child: Container(
                     alignment: Alignment.center,
                     width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: EdgeInsets.symmetric(vertical: 16),
                     child: Text(
                       'Get Your Report',
                       style: GoogleFonts.cairo(

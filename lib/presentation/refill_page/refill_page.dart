@@ -179,7 +179,7 @@ class _RefillPillsState extends State<RefillPills> {
                   child: Container(
                     alignment: Alignment.center,
                     width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: EdgeInsets.symmetric(vertical: 16),
                     child: Text(
                       'Add Refill Request',
                       style: GoogleFonts.cairo(

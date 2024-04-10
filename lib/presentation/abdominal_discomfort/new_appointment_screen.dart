@@ -47,11 +47,22 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
     '05 Doctor',
   ];
 
+  bool isLoading = true;
+
   @override
   void initState() {
     controller.getUsers();
     print("++++${controller.departmentdata.value}");
     super.initState();
+    loadData();
+  }
+
+  void loadData() {
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
   }
 
   void _search() {
@@ -65,20 +76,18 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: ColorManager.primarydarkGreenColor,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        image: DecorationImage(
+          alignment: Alignment(1.0, -1.0),
+          image: AssetImage(ImageSaource.kString1),
+        ),
+      ),
       child: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            image: DecorationImage(
-              alignment: Alignment(1.0, -1.0),
-              image: AssetImage(ImageSaource.kString1),
-            ),
-          ),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: _buildLoadedBody(),
-          ),
+        maintainBottomViewPadding: true,
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: _buildLoadedBody(),
         ),
       ),
     );
@@ -131,26 +140,6 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
         child: Container(
           child: Icon(Icons.arrow_back_ios),
         ),
-      ),
-    );
-  }
-
-  Widget _buildLoadingBody() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          LoadingAnimationWidget.staggeredDotsWave(
-            color: Colors.white,
-            size: 200,
-          ),
-          _buildAppBar(),
-          const SizedBox(height: 20),
-          _buildSearchField(),
-          const SizedBox(height: 20),
-          Expanded(child: _buildCategoryList()),
-        ],
       ),
     );
   }
@@ -273,100 +262,90 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
     });
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.8, // Adjust the height as needed
+      height: MediaQuery.of(context).size.height * 0.8,
       child: controller.isLoading.value
           ? Shimmer.fromColors(
-        baseColor: Colors.grey,
-        highlightColor: Colors.grey,
-        child: Container(
-          child: Obx(
-                () => ListView.separated(
-              physics: NeverScrollableScrollPhysics(), // Disable scrolling when shimmering
-              shrinkWrap: true,
-              itemCount: controller.departmentdata.value,
-              separatorBuilder: (BuildContext context, int index) => Divider(
-                indent: 110,
-                thickness: 2,
-              ),
-              itemBuilder: (context, index) {
-                // final imagePaths = controller.newimages[index]?.image;
-
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AbdominalDiscomfortPage(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(1),
-                    ),
-                    child: Row(
-                      children: [
-                        _buildCategoryImage(index),
-                        SizedBox(width: 8),
-                        _buildCategoryDetails(index),
-                        Spacer(),
-                        _buildArrowIcon(),
-                      ],
-
-                    ),
-                  ),
-
-                );
-              },
-            ),
-          ),
-        ),
-      )
-          : Obx(
-            () => ListView.separated(
-          shrinkWrap: true,
-          itemCount: controller.departmentdata.value,
-          separatorBuilder: (BuildContext context, int index) => Divider(
-            indent: 110,
-            thickness: 2,
-          ),
-          itemBuilder: (context, index) {
-            // final imagePaths = controller.newimages[index]?.image;
-
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AbdominalDiscomfortPage(),
-                  ),
-                );
-              },
+              baseColor: Colors.grey,
+              highlightColor: Colors.grey,
               child: Container(
-                padding: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(1),
-                ),
-                child: Row(
-                  children: [
-                    _buildCategoryImage(index),
-                    SizedBox(width: 8),
-                    _buildCategoryDetails(index),
-                    Spacer(),
-                    _buildArrowIcon(),
-                  ],
+                child: Obx(
+                  () => ListView.separated(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: controller.departmentdata.value,
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Divider(
+                      indent: 110,
+                      thickness: 2,
+                    ),
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AbdominalDiscomfortPage(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(1),
+                          ),
+                          child: Row(
+                            children: [
+                              _buildCategoryImage(index),
+                              SizedBox(width: 8),
+                              _buildCategoryDetails(index),
+                              _buildArrowIcon(),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
-
-            );
-          },
-        ),
-      ),
+            )
+          : Obx(
+              () => ListView.separated(
+                shrinkWrap: true,
+                itemCount: controller.departmentdata.value,
+                separatorBuilder: (BuildContext context, int index) => Divider(
+                  indent: 110,
+                  thickness: 2,
+                ),
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AbdominalDiscomfortPage(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(1),
+                      ),
+                      child: Row(
+                        children: [
+                          _buildCategoryImage(index),
+                          SizedBox(width: 8),
+                          _buildCategoryDetails(index),
+                          _buildArrowIcon(),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
     );
   }
-
-
 
   Widget _buildCategoryImage(int index) {
     final imageUrl = controller.departmentModel!.data![index].image ?? '';
@@ -395,39 +374,50 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
   }
 
   Widget _buildCategoryDetails(int index) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [ Text(
-            "${controller.departmentModel!.data![index].descriptionEng}",
-            style: GoogleFonts.cairo(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: ColorManager.primarydarkGreenColor,
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  "${controller.departmentModel!.data![index].descriptionEng}",
+                  style: GoogleFonts.cairo(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: ColorManager.primarydarkGreenColor,
+                  ),
+                  overflow: TextOverflow.visible,
+                ),
+              ),
+            ],
+          ),
+          Text(
+            "${controller.departmentModel!.data![index].doctorCount}",
+            style: GoogleFonts.roboto(
+              fontSize: 14,
             ),
-            overflow: TextOverflow.visible,
           ),
-              ],
-        ),
-        Text(
-          "${controller.departmentModel!.data![index].doctorCount}",
-          style: GoogleFonts.roboto(
-            fontSize: 14,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
-
-
-
 
   Widget _buildArrowIcon() {
     return Icon(
       Icons.arrow_forward_ios,
       color: Colors.grey,
       size: 20,
+    );
+  }
+
+  Widget _buildLoadingWidget() {
+    return Center(
+      child: LoadingAnimationWidget.dotsTriangle(
+        size: 50,
+        color: ColorManager.darkblueColor,
+      ),
     );
   }
 }
